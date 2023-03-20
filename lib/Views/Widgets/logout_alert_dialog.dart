@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../Controllers/Cubits/authentication_cubit/authentication_cubit.dart';
 
 
 class LogoutAlertDialog extends StatefulWidget {
@@ -124,7 +127,7 @@ class _LogoutAlertDialogState extends State<LogoutAlertDialog> {
                               child: Container(
                                 height: 45.sp,
                                 decoration: BoxDecoration(
-                                    color: AppColors.darkBlue,
+                                    color: Colors.blue[900],
                                     borderRadius:
                                     BorderRadius.circular(4.sp)),
                                 child: Center(
