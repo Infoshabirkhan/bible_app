@@ -10,7 +10,7 @@ static  List completedTask = [];
       .collection('BibleTask')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('userTask');
-  static Future<List<TaskModel>?> getTask() async {
+  static Future<List<TaskModel>?> getTask({bool? isSortAscending = false}) async {
 
     completedTask.clear();
     List<TaskModel> list = [];
@@ -27,7 +27,13 @@ static  List completedTask = [];
           list.add(model);
         }
 
-        list.sort((a,b)=> a.id.compareTo(b.id));
+        if(isSortAscending!){
+          list.sort((a,b)=> a.totalChapters.compareTo(b.totalChapters));
+
+        }else{
+          list.sort((a,b)=> a.id.compareTo(b.id));
+
+        }
 
 
 

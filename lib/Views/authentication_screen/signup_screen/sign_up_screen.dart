@@ -25,6 +25,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+
+ bool isValidate(){
+   if(nameController.text.isEmpty){
+
+     ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Name is Required')));
+
+     return false;
+   }else if(emailController.text.isEmpty){
+     ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Email is Required')));
+     return false;
+   }else if(passwordController.text.isEmpty){
+     ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Password is Required')));
+     return false;
+   }else if (confirmPasswordController.text.isEmpty) {
+     ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Confirm password is Required')));
+     return false;
+   }else{
+     return true;
+   }
+ }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -112,16 +132,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 45.sp,
                   child: ElevatedButton(onPressed: () {
 
+                  if(isValidate()){
                     if(passwordController.text != confirmPasswordController.text){
+                      ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Please enter the same password')));
 
-                      Fluttertoast.showToast(msg: 'Please enter the same password');
                     }else{
                       context.read<AuthenticationCubit>().signUp(
-                        userName: nameController.text.trim(),
+                          userName: nameController.text.trim(),
                           email: emailController.text.trim(),
                           password: passwordController.text.trim()
                       );
                     }
+                  }
 
                   }, child: Text('Sign Up'))),
 

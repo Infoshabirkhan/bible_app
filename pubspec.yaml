@@ -45,6 +45,7 @@ dependencies:
   google_mobile_ads: ^2.3.0
   shimmer: ^2.0.0
 
+
   fluttertoast: ^8.0.8
 
 dev_dependencies:

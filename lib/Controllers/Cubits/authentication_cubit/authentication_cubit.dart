@@ -47,11 +47,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
    await FirebaseAuth.instance.signOut();
 
-   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
 
+   Navigator.of(context).pushAndRemoveUntil((MaterialPageRoute(builder: (context){
 
-     return LoginScreen();
-   }));
+   return LoginScreen();
+   })), (route) => false);
+   // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+   //
+   //
+   //   return LoginScreen();
+   // }));
 
   }
 

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import 'bible_book_repo.dart';
@@ -53,7 +55,7 @@ class AuthenticationRepo {
           print('==================== added $item');
         }
 
-        await Future.delayed(Duration(seconds: 5));
+        await Future.delayed(Duration(seconds: 3));
         return true;
       } else {
         return false;
@@ -78,6 +80,7 @@ class AuthenticationRepo {
         return false;
       }
     } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.code,backgroundColor: Colors.red);
       print('============----------%%%%%%%%== eroor ${e.code}');
       return false;
 

@@ -2,6 +2,7 @@ import 'package:bible_app/Controllers/Cubits/authentication_cubit/authentication
 import 'package:bible_app/Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/profile_screen/profile_screen.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/progress_report_screen/progress_report_screen.dart';
+import 'package:bible_app/Views/bottom_navigation_screens/sort_order_screen/sort_order_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,9 +54,15 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
               pageController: pageController,
             ),
             BottomNavItems(
+              title: 'Sorted',
+              icon: Icons.sort,
+              currentIndex: 2,
+              pageController: pageController,
+            ),
+            BottomNavItems(
               title: 'Profile',
               icon: Icons.person,
-              currentIndex: 2,
+              currentIndex: 3,
               pageController: pageController,
             ),
           ],
@@ -67,6 +74,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         children: [
           ProgressReportScreen(),
           BookListScreen(),
+          SortedOrderScreen(),
           ProfileScreen(),
 
         ],

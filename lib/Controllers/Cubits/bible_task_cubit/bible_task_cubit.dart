@@ -11,12 +11,12 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 
 
 
-  getTaskInfo()async{
+  getTaskInfo({bool? isSortAscending = false})async{
 
 
     emit(BibleTaskLoading());
 
-    var list = await BibleTaskRepo.getTask();
+    var list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
 
 
     if(list !=null){

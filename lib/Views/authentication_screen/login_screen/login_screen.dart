@@ -34,17 +34,35 @@ class _LoginScreenState extends State<LoginScreen> {
               return
                 Dialog(
                   child: Container(
-                    height: 60.sp,
-                    child:  Center(child: CircularProgressIndicator(),),
+                    child:  ListView(
+                      shrinkWrap: true,
+                      children: [
+                        Center(child: Text('Please wait..',style: GoogleFonts.raleway(
+                          fontSize: 18.sp
+                        ),),),
+                        SizedBox(height: 15.sp,),
+                        Center(child: CircularProgressIndicator(),),
+
+                        SizedBox(height: 15.sp,),
+
+                      ],
+                    ),
                   ),
                 );
             });
 
           }
             if(state is AuthenticationLoaded){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context){
                 return BottomNavigationScreen();
-              }));
+              }), (route) => false);
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context){
+              //   return BottomNavigationScreen();
+              // }));
+            }
+            if(state is AuthenticationError){
+              Navigator.of(context).pop();
             }
             // Navigator.of(context).pop();
 
@@ -101,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   if(passwordController.text.isEmpty || emailController.text.isEmpty){
 
+                    ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Email and password is required'),),);
                     // Fluttertoast.showToast(msg: 'Please enter the same password');
                   }else{
                     context.read<AuthenticationCubit>().login(

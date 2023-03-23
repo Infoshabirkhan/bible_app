@@ -111,7 +111,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                     ),
 
                     SizedBox(height: 20.sp,),
-                    Text('Chapter Completed of 1189', style: GoogleFonts.poppins(
+                    Text('Chapters Completed of 1189', style: GoogleFonts.poppins(
 
                       fontSize: 20.sp,
 
@@ -136,7 +136,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
 
 
                     SizedBox(height: 20.sp,),
-                    Text('Chapter Completed %', style: GoogleFonts.poppins(
+                    Text('Chapters Completed %', style: GoogleFonts.poppins(
 
                       fontSize: 20.sp,
 

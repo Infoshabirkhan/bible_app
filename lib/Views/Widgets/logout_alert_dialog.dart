@@ -45,7 +45,7 @@ class _LogoutAlertDialogState extends State<LogoutAlertDialog> {
                           'Confirmation!!!',
                           style: GoogleFonts.raleway(
                             fontSize: 24.sp,
-                            color: const Color(0xff2D2D2D),
+                            color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -76,7 +76,8 @@ class _LogoutAlertDialogState extends State<LogoutAlertDialog> {
                       child: Text(
                         'Are you sure to logout. You will have to login again?',
                         style: GoogleFonts.raleway(
-                            fontSize: 16.sp, color: const Color(0xff2D2D2D)),
+                            fontSize: 16.sp, color:  Colors.white,
+                        ),
                       ),
                     ),
                   ),
