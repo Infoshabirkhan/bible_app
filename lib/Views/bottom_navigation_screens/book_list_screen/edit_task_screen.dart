@@ -11,6 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../Models/advertisement_id.dart';
+
 
 class EditTaskScreen extends StatefulWidget {
   final TaskModel model;
@@ -22,11 +24,16 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
 
-
+  final BannerAd myBanner = BannerAd(
+    adUnitId: AdvertisementID.bannerAndroidId,
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
 
   @override
   void initState() {
-
+    myBanner.load();
     AdvertisementRepo.showInterstitialAd();
     // TODO: implement initState
     super.initState();
@@ -38,58 +45,75 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         centerTitle: true,
         title: Text(widget.model.bookName, style: GoogleFonts.raleway(),),
       ),
-      body: StreamBuilder(
-        stream: BibleTaskRepo.taskRef.doc(widget.model.documentId).snapshots(),
-        builder: (context, snapshot){
-          if(snapshot.hasData && !snapshot.hasError){
-            var data = snapshot.data;
-          return  GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                itemCount: widget.model.totalChapters,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 100 ), itemBuilder: (context, index){
+      body: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream: BibleTaskRepo.taskRef.doc(widget.model.documentId).snapshots(),
+              builder: (context, snapshot){
+                if(snapshot.hasData && !snapshot.hasError){
+                  var data = snapshot.data;
+                return  GridView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                      itemCount: widget.model.totalChapters,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 100 ), itemBuilder: (context, index){
 
 
-              return Row(
-                children: [
-                  Expanded(child: Checkbox(value: data!['read_chapters'][index], onChanged: (bool? value) async {
+                    return Row(
+                      children: [
+                        Expanded(child: Checkbox(value: data!['read_chapters'][index], onChanged: (bool? value) async {
 
 
 
 
 
-                    if(value !=null){
+                          if(value !=null){
 
-                      var list = data!['read_chapters'];
+                            var list = data!['read_chapters'];
 
-                      //print(list);
-                      list[index] = value;
+                            //print(list);
+                            list[index] = value;
 
-                    //  print('============== after list $list');
-                     await BibleTaskRepo.taskRef.doc(widget.model.documentId).update(
-                          {
-                            "read_chapters" : list
+                          //  print('============== after list $list');
+                           await BibleTaskRepo.taskRef.doc(widget.model.documentId).update(
+                                {
+                                  "read_chapters" : list
+                                });
+                           context.read<ChapterCubit>().setChapter(value: value);
+
+
+
+                          }
+                          setState(() {
+
                           });
-                     context.read<ChapterCubit>().setChapter(value: value);
 
+                        },),),
 
+                        Expanded(child: Text("${index +1}"))
+                      ],
+                    );
+                  });
+                }else if(snapshot.connectionState == ConnectionState.waiting){
+                  return Center(child: CircularProgressIndicator(),);
+                }else{
+                  return Center(child: Text('something went wrong'),);
+                }
+              },
+            ),
+          ),
 
-                    }
-                    setState(() {
+          SizedBox(height: 15.sp,),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
 
-                    });
+              width: myBanner.size.width.toDouble(),
+              height: myBanner.size.height.toDouble(),
+              child: AdWidget(ad: myBanner,),
+            ),),
 
-                  },),),
-
-                  Expanded(child: Text("${index +1}"))
-                ],
-              );
-            });
-          }else if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(),);
-          }else{
-            return Center(child: Text('something went wrong'),);
-          }
-        },
+        ],
       )
     );
   }

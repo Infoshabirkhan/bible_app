@@ -128,7 +128,7 @@ class _LogoutAlertDialogState extends State<LogoutAlertDialog> {
                               child: Container(
                                 height: 45.sp,
                                 decoration: BoxDecoration(
-                                    color: Colors.blue[900],
+                                    color: Colors.red,
                                     borderRadius:
                                     BorderRadius.circular(4.sp)),
                                 child: Center(

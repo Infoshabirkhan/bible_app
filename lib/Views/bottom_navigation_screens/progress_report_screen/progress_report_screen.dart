@@ -9,6 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../Models/advertisement_id.dart';
+
 class ProgressReportScreen extends StatefulWidget {
   const ProgressReportScreen({Key? key}) : super(key: key);
 
@@ -20,7 +22,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
 
 
   final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+    adUnitId: AdvertisementID.bannerAndroidId,
     size: AdSize.banner,
     request: AdRequest(),
     listener: BannerAdListener(),

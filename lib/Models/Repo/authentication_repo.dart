@@ -16,7 +16,11 @@ class AuthenticationRepo {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      if (userCredential.user != null) {
+
+      if (userCredential.user != null && !userCredential.user!.emailVerified) {
+
+       await  userCredential.user!.sendEmailVerification();
+
         var docRef = FirebaseFirestore.instance
             .collection("BibleTask")
             .doc('${userCredential.user!.uid}')
@@ -31,7 +35,9 @@ class AuthenticationRepo {
           "user_name": userName,
           "join_date" : Timestamp.now(),
           "profile_image" : '',
-          "address" : ''
+          "address" : '',
+          "email" : email,
+          "password"  : password
         });
 
         for (var item in BibleBookRepo.bookList) {
@@ -55,12 +61,15 @@ class AuthenticationRepo {
           print('==================== added $item');
         }
 
+
+       await FirebaseAuth.instance.signOut();
         await Future.delayed(Duration(seconds: 3));
         return true;
       } else {
         return false;
       }
     } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.code, backgroundColor: Colors.red);
       print('============================== error ${e.code}');
       // Fluttertoast.showToast(msg: e.code);
       return false;
@@ -74,9 +83,23 @@ class AuthenticationRepo {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      if (userCredential.user != null) {
+      print('==================== ${userCredential.user!.emailVerified}');
+      if (userCredential.user != null  && userCredential.user!.emailVerified) {
+
+        print('==================== in if condition');
+
         return true;
-      } else {
+
+
+      } else if(!userCredential.user!.emailVerified){
+
+       Fluttertoast.showToast(msg: 'Email Not verified', backgroundColor: Colors.red);
+
+     await  FirebaseAuth.instance.signOut();
+
+       return false;
+      }else {
+        print('===================');
         return false;
       }
     } on FirebaseAuthException catch (e) {

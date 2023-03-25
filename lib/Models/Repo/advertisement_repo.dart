@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import '../advertisement_id.dart';
 const int maxFailedLoadAttempts = 3;
 
 class AdvertisementRepo{
@@ -17,7 +19,7 @@ static  InterstitialAd? _interstitialAd;
  static Future<void> createInterstitialAd() async {
    await  InterstitialAd.load(
         adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/1033173712'
+            ? AdvertisementID.interstitialAndroidId
             : 'ca-app-pub-3940256099942544/4411468910',
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
@@ -63,5 +65,14 @@ static  InterstitialAd? _interstitialAd;
     _interstitialAd!.show();
     _interstitialAd = null;
   }
+
+
+
+  static BannerAd myBanner = BannerAd(
+    adUnitId: AdvertisementID.bannerAndroidId,
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
 
 }

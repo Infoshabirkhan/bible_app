@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../Models/advertisement_id.dart';
 import '../../../Models/models/task_model.dart';
 import 'books_card.dart';
 
@@ -17,13 +19,24 @@ class BookListScreen extends StatefulWidget {
 
 class _BookListScreenState extends State<BookListScreen> {
 
+  final BannerAd myBanner = BannerAd(
+    adUnitId: AdvertisementID.bannerAndroidId,
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
+
   @override
   void initState() {
+    myBanner.load();
+
     context.read<BibleBooksCubit>().getBooks();
     context.read<BibleTaskCubit>().getTaskInfo();
     // TODO: implement initState
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,86 +54,102 @@ class _BookListScreenState extends State<BookListScreen> {
     }
     // TODO: implement listener
     },
-      child: BlocBuilder<BibleTaskCubit, BibleTaskState>(
-        builder: (context, state) {
-          if(state is BibleTaskLoaded){
-            return Column(
-              // primary: false,
-              // physics: NeverScrollableScrollPhysics(),
-              children: [
-                Expanded(
-                  child: Container(
-                    child: Row(
-                      children: [
+      child: Column(
+        children: [
+          Expanded(
 
-
-                        Spacer(),
-                        Expanded(
-                          flex: 5,
+            child: BlocBuilder<BibleTaskCubit, BibleTaskState>(
+              builder: (context, state) {
+                if(state is BibleTaskLoaded){
+                  return Column(
+                    // primary: false,
+                    // physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      Expanded(
+                        child: Container(
                           child: Row(
                             children: [
-                              Expanded(child:
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: FittedBox(
-                                  child: Text('Books', style: GoogleFonts.poppins(
-
-                                  ),),
-                                ),
-                              ),),
 
 
+                              Spacer(),
+                              Expanded(
+                                flex: 5,
+                                child: Row(
+                                  children: [
+                                    Expanded(child:
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: FittedBox(
+                                        child: Text('Books', style: GoogleFonts.poppins(
 
-                              Expanded(child: Center(
-                                child: FittedBox(
-                                  child: Text('Chapter',style: GoogleFonts.poppins(
+                                        ),),
+                                      ),
+                                    ),),
 
 
-                                  ),),
-                                ),
-                              ),),
 
-                              Spacer()
-                              // Expanded(child: Center(
-                              //
-                              //   child: FittedBox(
-                              //     child: Text('Related Notes',style: GoogleFonts.poppins(
-                              //
-                              //
-                              //     ),),
-                              //   ),
-                              // ),),
+                                    Expanded(child: Center(
+                                      child: FittedBox(
+                                        child: Text('Chapter',style: GoogleFonts.poppins(
+
+
+                                        ),),
+                                      ),
+                                    ),),
+
+                                    Spacer()
+                                    // Expanded(child: Center(
+                                    //
+                                    //   child: FittedBox(
+                                    //     child: Text('Related Notes',style: GoogleFonts.poppins(
+                                    //
+                                    //
+                                    //     ),),
+                                    //   ),
+                                    // ),),
+
+
+                                  ],
+                                ),),
+
 
 
                             ],
-                          ),),
+                          ),
+                        ),
+                      ),
 
 
+                      Expanded(
+                        flex: 9,
+                        child: ListView.builder(
 
-                      ],
-                    ),
-                  ),
-                ),
+                            padding: EdgeInsets.symmetric(horizontal: 5.sp,),
+                            itemCount: state.model.length,
+                            itemBuilder: (context, index) {
+                              var data =  state.model[index];
+                                return BookCard(data: data,);
+                            }),
+                      )
+                    ],
+                  );
 
+                }else{
+                  return Center(child: CircularProgressIndicator(),);
+                }
+              },
+            ),
+          ),
+          SizedBox(height: 15.sp,),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
 
-                Expanded(
-                  flex: 9,
-                  child: ListView.builder(
-
-                      padding: EdgeInsets.symmetric(horizontal: 5.sp,),
-                      itemCount: state.model.length,
-                      itemBuilder: (context, index) {
-                        var data =  state.model[index];
-                          return BookCard(data: data,);
-                      }),
-                )
-              ],
-            );
-
-          }else{
-            return Center(child: CircularProgressIndicator(),);
-          }
-        },
+              width: myBanner.size.width.toDouble(),
+              height: myBanner.size.height.toDouble(),
+              child: AdWidget(ad: myBanner,),
+            ),),
+        ],
       ),
     )
       // body:BookList()
