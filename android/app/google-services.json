@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1014089381573",
-    "project_id": "bibleprogressapp",
-    "storage_bucket": "bibleprogressapp.appspot.com"
+    "project_number": "736921466167",
+    "project_id": "book-tracker-62d8a",
+    "storage_bucket": "book-tracker-62d8a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1014089381573:android:71ccf3a33f444f5a38e2ac",
+        "mobilesdk_app_id": "1:736921466167:android:57e82c4eb5be4df70ed6b2",
         "android_client_info": {
           "package_name": "com.example.bible_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1014089381573-vpca3hja900jqata1hv7mk49l5l8p0od.apps.googleusercontent.com",
+          "client_id": "736921466167-7abi2sdjtn75sk6rm4q39vjdrugbgt7k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAlzTyBJcd4VuFEagx6MzCl2yTJgcQ1GTw"
+          "current_key": "AIzaSyC7yS16LE4pIh0dlQ8AbdKFN9aVC9wkD7w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1014089381573-vpca3hja900jqata1hv7mk49l5l8p0od.apps.googleusercontent.com",
+              "client_id": "736921466167-7abi2sdjtn75sk6rm4q39vjdrugbgt7k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
