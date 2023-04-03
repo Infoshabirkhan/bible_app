@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../../Models/advertisement_id.dart';
 
@@ -24,17 +23,17 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: AdvertisementID.bannerAndroidId,
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
+  // final BannerAd myBanner = BannerAd(
+  //   adUnitId: AdvertisementID.bannerAndroidId,
+  //   size: AdSize.banner,
+  //   request: AdRequest(),
+  //   listener: BannerAdListener(),
+  // );
 
   @override
   void initState() {
-    myBanner.load();
-    AdvertisementRepo.showInterstitialAd();
+    // myBanner.load();
+    // AdvertisementRepo.showInterstitialAd();
     // TODO: implement initState
     super.initState();
   }
@@ -104,14 +103,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           ),
 
           SizedBox(height: 15.sp,),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-
-              width: myBanner.size.width.toDouble(),
-              height: myBanner.size.height.toDouble(),
-              child: AdWidget(ad: myBanner,),
-            ),),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Container(
+          //
+          //     width: myBanner.size.width.toDouble(),
+          //     height: myBanner.size.height.toDouble(),
+          //     child: AdWidget(ad: myBanner,),
+          //   ),),
 
         ],
       )

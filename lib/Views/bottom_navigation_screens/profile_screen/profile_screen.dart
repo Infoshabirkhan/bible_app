@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../Controllers/Cubits/authentication_cubit/authentication_cubit.dart';
@@ -23,15 +22,15 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: AdvertisementID.bannerAndroidId,
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
+  // final BannerAd myBanner = BannerAd(
+  //   adUnitId: AdvertisementID.bannerAndroidId,
+  //   size: AdSize.banner,
+  //   request: AdRequest(),
+  //   listener: BannerAdListener(),
+  // );
   @override
   void initState() {
-    myBanner.load();
+    // myBanner.load();
 
     // TODO: implement initState
     super.initState();
@@ -175,14 +174,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           SizedBox(height: 15.sp,),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-
-              width: myBanner.size.width.toDouble(),
-              height: myBanner.size.height.toDouble(),
-              child: AdWidget(ad: myBanner,),
-            ),),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Container(
+          //
+          //     width: myBanner.size.width.toDouble(),
+          //     height: myBanner.size.height.toDouble(),
+          //     child: AdWidget(ad: myBanner,),
+          //   ),),
 
         ],
       ),

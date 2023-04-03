@@ -5,11 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
 import 'Views/authentication_screen/login_screen/login_screen.dart';
-import 'Views/authentication_screen/signup_screen/sign_up_screen.dart';
 import 'Views/bottom_navigation_screens/bottom_navigation_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +15,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
+  // await MobileAds.instance.initialize();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

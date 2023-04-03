@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../Models/advertisement_id.dart';
@@ -21,16 +20,16 @@ class ProgressReportScreen extends StatefulWidget {
 class _ProgressReportScreenState extends State<ProgressReportScreen> {
 
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: AdvertisementID.bannerAndroidId,
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
+  // final BannerAd myBanner = BannerAd(
+  //   adUnitId: AdvertisementID.bannerAndroidId,
+  //   size: AdSize.banner,
+  //   request: AdRequest(),
+  //   listener: BannerAdListener(),
+  // );
 
   @override
   void initState() {
-      myBanner.load();
+      // myBanner.load();
     context.read<BibleTaskCubit>().getTaskInfo();
 
     context.read<ChapterCubit>().getChapter();
@@ -221,15 +220,15 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
           //     }
           //   },
           // ),),
-          Expanded(child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-
-              width: myBanner.size.width.toDouble(),
-              height: myBanner.size.height.toDouble(),
-              child: AdWidget(ad: myBanner,),
-            ),
-          ),),
+          // Expanded(child: Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Container(
+          //
+          //     width: myBanner.size.width.toDouble(),
+          //     height: myBanner.size.height.toDouble(),
+          //     child: AdWidget(ad: myBanner,),
+          //   ),
+          // ),),
         ],
       ),
     );
