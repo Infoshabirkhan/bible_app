@@ -1,5 +1,7 @@
 import 'package:bible_app/Controllers/Cubits/bible_books_cubit/bible_books_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.dart';
+import 'package:bible_app/Views/Widgets/my_banner_ad_widget.dart';
+import 'package:bible_app/Views/Widgets/no_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,16 +98,8 @@ class _BookListScreenState extends State<BookListScreen> {
                                       ),
                                     ),),
 
-                                    Spacer()
-                                    // Expanded(child: Center(
-                                    //
-                                    //   child: FittedBox(
-                                    //     child: Text('Related Notes',style: GoogleFonts.poppins(
-                                    //
-                                    //
-                                    //     ),),
-                                    //   ),
-                                    // ),),
+                                    const Spacer()
+
 
 
                                   ],
@@ -133,22 +127,17 @@ class _BookListScreenState extends State<BookListScreen> {
                     ],
                   );
 
+                }else if(state is BibleTaskNoInternet){
+                  return NoInternetWidget(onRetry: (){
+                    context.read<BibleTaskCubit>().getTaskInfo();
+                  });
                 }else{
                   return Center(child: CircularProgressIndicator(),);
                 }
               },
             ),
           ),
-          SizedBox(height: 15.sp,),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: Container(
-          //
-          //     width: myBanner.size.width.toDouble(),
-          //     height: myBanner.size.height.toDouble(),
-          //     child: AdWidget(ad: myBanner,),
-          //   ),),
-        ],
+          const MyBannerAdWidget()  ,      ],
       ),
     )
       // body:BookList()

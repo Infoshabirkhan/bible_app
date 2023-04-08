@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../Models/models/task_model.dart';
+import '../../../Models/utils/internet_connectivity.dart';
 
 part 'bible_task_state.dart';
 
@@ -16,6 +17,15 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 
     emit(BibleTaskLoading());
 
+    if(await InternetConnectivity.isNotConnected()){
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      emit(BibleTaskNoInternet());
+
+
+      return;
+    }
     var list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
 
 

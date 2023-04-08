@@ -20,7 +20,7 @@ class AdvertisementRepo{
 //    await  InterstitialAd.load(
 //         adUnitId: Platform.isAndroid
 //             ? AdvertisementID.interstitialAndroidId
-//             : 'ca-app-pub-3940256099942544/4411468910',
+//             : AdvertisementID.interstitialIosId,
 //         request: request,
 //         adLoadCallback: InterstitialAdLoadCallback(
 //           onAdLoaded: (InterstitialAd ad) {
@@ -68,11 +68,6 @@ class AdvertisementRepo{
 //
 //
 //
-//   static BannerAd myBanner = BannerAd(
-//     adUnitId: AdvertisementID.bannerAndroidId,
-//     size: AdSize.banner,
-//     request: AdRequest(),
-//     listener: BannerAdListener(),
-//   );
+
 
 }

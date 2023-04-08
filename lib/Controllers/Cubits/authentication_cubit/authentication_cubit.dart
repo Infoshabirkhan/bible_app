@@ -1,4 +1,5 @@
 import 'package:bible_app/Models/Repo/authentication_repo.dart';
+import 'package:bible_app/Models/utils/internet_connectivity.dart';
 import 'package:bible_app/Views/authentication_screen/login_screen/login_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,8 +13,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
 
   signUp({required String email, required String password, required String userName})async {
+    if(await InternetConnectivity.isNotConnected()){
 
+      emit(AuthenticationNoInternet());
+      return;
+    }
     emit(AuthenticationLoading());
+
+
+
     var response = await AuthenticationRepo.signUp(email: email, password: password, userName: userName);
 
     if(response == true){
@@ -30,7 +38,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
 
   login({required String email, required String password}) async {
+
+    if(await InternetConnectivity.isNotConnected()){
+
+      emit(AuthenticationNoInternet());
+      return;
+    }
     emit(AuthenticationLoading());
+
 
     var result = await AuthenticationRepo.login(email: email, password: password);
 
@@ -50,7 +65,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
    Navigator.of(context).pushAndRemoveUntil((MaterialPageRoute(builder: (context){
 
-   return LoginScreen();
+   return const LoginScreen();
    })), (route) => false);
    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
    //

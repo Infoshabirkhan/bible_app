@@ -1,3 +1,4 @@
+import 'package:bible_app/Models/utils/internet_connectivity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +12,9 @@ class BibleBooksCubit extends Cubit<BibleBooksState> {
 
   getBooks() async {
 
+
     emit(BibleBooksLoading());
+
 
     var data = await BibleBookRepo.getBooks();
 

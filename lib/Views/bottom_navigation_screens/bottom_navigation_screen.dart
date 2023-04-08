@@ -1,4 +1,3 @@
-import 'package:bible_app/Controllers/Cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/profile_screen/profile_screen.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/progress_report_screen/progress_report_screen.dart';
@@ -25,18 +24,13 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-
-
         decoration: BoxDecoration(
-
-            color: Colors.black,
-
-            border: Border(
+          color: Colors.black,
+          border: Border(
             top: BorderSide(
-
-              color: Colors.white.withOpacity(0.3)
-            )
-          )
+              color: Colors.white.withOpacity(0.3),
+            ),
+          ),
         ),
         height: 70.sp,
         child: Row(
@@ -69,14 +63,13 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         ),
       ),
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: [
+        children: const [
           ProgressReportScreen(),
           BookListScreen(),
           SortedOrderScreen(),
           ProfileScreen(),
-
         ],
       ),
     );
@@ -99,32 +92,39 @@ class BottomNavItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: BlocBuilder<BottomNavigationCubit, int>(
-      builder: (context, state) {
-        return InkWell(
-          onTap: () {
-            pageController.jumpToPage(currentIndex);
-            context.read<BottomNavigationCubit>().getNext(index: currentIndex);
-          },
-          child: Column(
-            children: [
-              Expanded(
-                child: Icon(icon,                  color: state == currentIndex? Colors.red:Colors.white,
+    return Expanded(
+      child: BlocBuilder<BottomNavigationCubit, int>(
+        builder: (context, state) {
+          return InkWell(
+            onTap: () {
+              pageController.jumpToPage(currentIndex);
+              context
+                  .read<BottomNavigationCubit>()
+                  .getNext(index: currentIndex);
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  child: Icon(
+                    icon,
+                    color: state == currentIndex ? Colors.red : Colors.white,
+                  ),
                 ),
-              ),
-              Expanded(
+                Expanded(
                   child: Text(
-                title,
-                style: GoogleFonts.poppins(
-                  color: state == currentIndex? Colors.red:Colors.white,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
+                    title,
+                    style: GoogleFonts.poppins(
+                      color: state == currentIndex ? Colors.red : Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-              ))
-            ],
-          ),
-        );
-      },
-    ));
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

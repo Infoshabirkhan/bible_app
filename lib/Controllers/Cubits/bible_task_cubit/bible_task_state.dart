@@ -5,6 +5,7 @@ abstract class BibleTaskState {}
 
 class BibleTaskInitial extends BibleTaskState {}
 class BibleTaskLoading extends BibleTaskState {}
+class BibleTaskNoInternet extends BibleTaskState {}
 class BibleTaskAddingEntry extends BibleTaskState {}
 class BibleTaskDataAdded extends BibleTaskState {}
 class BibleTaskLoaded extends BibleTaskState {

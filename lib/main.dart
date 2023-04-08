@@ -4,6 +4,7 @@ import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.d
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
@@ -15,6 +16,10 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   // await MobileAds.instance.initialize();
 
   await Firebase.initializeApp(
@@ -50,8 +55,8 @@ class MyApp extends StatelessWidget {
                 colorSchemeSeed: Colors.blue,
               ),
               home: FirebaseAuth.instance.currentUser != null
-                  ? BottomNavigationScreen()
-                  : LoginScreen(),
+                  ? const BottomNavigationScreen()
+                  : const LoginScreen(),
             ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:bible_app/Models/Repo/chapter_task_repo.dart';
 import 'package:bible_app/Models/models/chapter_model.dart';
+import 'package:bible_app/Models/utils/internet_connectivity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -14,6 +15,12 @@ class ChapterCubit extends Cubit<ChapterState> {
     emit(ChapterLoading());
 
 
+    if(await InternetConnectivity.isNotConnected()){
+
+     await Future.delayed(Duration(seconds: 2));
+     emit(ChapterNoInternet());
+      return;
+    }
     var response = await ChapterTaskRepo.getChapter();
 
     if(response ){

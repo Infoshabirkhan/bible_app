@@ -5,6 +5,7 @@ abstract class BibleBooksState {}
 
 class BibleBooksInitial extends BibleBooksState {}
 class BibleBooksLoading extends BibleBooksState {}
+class BibleBooksNoInternet extends BibleBooksState {}
 class BibleBooksLoaded extends BibleBooksState {
   final List<BibleBooksModel> model;
 

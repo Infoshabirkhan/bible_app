@@ -41,9 +41,13 @@ class AuthenticationRepo {
         });
 
         for (var item in BibleBookRepo.bookList) {
-          List<bool> readChapters = [];
+          List<Map<String, dynamic>> readChapters = [];
           for (var i = 0; i < item['bible_chapters']; i++) {
-            readChapters.add(false);
+            readChapters.add({
+              "status" : false,
+              "notes" : null,
+              "date_time" : null
+            });
           }
 
            docRef.add({
@@ -69,8 +73,8 @@ class AuthenticationRepo {
         return false;
       }
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.code, backgroundColor: Colors.red);
-      print('============================== error ${e.code}');
+      Fluttertoast.showToast(msg: getMessage(e.code), backgroundColor: Colors.red);
+      print('============================== error ${e.message}');
       // Fluttertoast.showToast(msg: e.code);
       return false;
       // TODO
@@ -103,11 +107,29 @@ class AuthenticationRepo {
         return false;
       }
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.code,backgroundColor: Colors.red);
+      Fluttertoast.showToast(msg: getMessage(e.code), backgroundColor: Colors.red, );
+     
+      
+     
       print('============----------%%%%%%%%== eroor ${e.code}');
       return false;
 
       // TODO
     }
   }
+
+
+ static String  getMessage(code){
+    if(code == 'user-not-found'){
+      return 'User not found with the given email';
+    }else if(code == 'wrong-password') {
+      return 'Wrong password try again';
+    }else if(code == 'invalid-email'){
+      return 'Invalid email format detected';
+    }else{
+      return code;
+    }
+  }
+
 }
+

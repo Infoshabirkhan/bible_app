@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Widgets/my_text_field.dart';
@@ -24,15 +25,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final formKey = GlobalKey<FormState>();
 
-  AutovalidateMode  autoValidateMode= AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: BlocListener<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
+
+          if(state is AuthenticationNoInternet){
+            Fluttertoast.showToast(msg: 'No Internet Connected', backgroundColor: Colors.red);
+          }
+
           if (state is AuthenticationLoading) {
             showDialog(
+                barrierDismissible: false,
+
                 context: (context),
                 builder: (context) {
                   return Dialog(
@@ -79,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         child: Form(
           key: formKey,
-          autovalidateMode: autoValidateMode,
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 20.sp),
             children: [
@@ -169,11 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: emailController.text.trim(),
                             password: passwordController.text.trim());
                       }else{
-                        autoValidateMode  = AutovalidateMode.always;
 
-                        setState(() {
-
-                        });
                       }
                       },
                       child: Text('Log in'))),

@@ -47,7 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
    }
  }
 
-  AutovalidateMode  autoValidateMode= AutovalidateMode.disabled;
 
  final formKey = GlobalKey<FormState>();
   @override
@@ -65,8 +64,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: AppBar(),
         body: BlocListener<AuthenticationCubit,AuthenticationState>(
           listener: (context, state) {
+            if(state is AuthenticationNoInternet){
+             Fluttertoast.showToast(msg: 'No Internet Connected', backgroundColor: Colors.red);
+            }
             if(state is AuthenticationLoading){
-              showDialog(context: (context), builder: (context){
+              showDialog(
+                  barrierDismissible: false,
+                  context: (context), builder: (context){
                 return
                   Dialog(
                     child: Container(
@@ -92,7 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
           child: Form(
             key: formKey,
-            autovalidateMode: autoValidateMode,
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.sp),
               children: [
@@ -135,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (value){
                     if(value == null || value.isEmpty){
                       return 'Please enter your email';
-                    }else if(!value.contains('@')){
+                    }else if(!value.contains('@') || !value.contains('.co')){
                       return 'Please enter a valid email';
 
                     }else{
@@ -208,11 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 );
                         print('================validated}');
                       }else{
-                        autoValidateMode  = AutovalidateMode.always;
 
-                        setState(() {
-
-                        });
 
 
 

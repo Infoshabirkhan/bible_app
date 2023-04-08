@@ -1,5 +1,4 @@
 import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.dart';
-import 'package:bible_app/Models/Repo/advertisement_repo.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/book_list_screen/edit_task_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../Models/models/bible_books.dart';
 
 class BookCard extends StatelessWidget {
   final TaskModel data;
