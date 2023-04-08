@@ -25,7 +25,7 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
 
   @override
   void initState() {
-    // myBanner.load();
+     myBanner.load();
     // TODO: implement initState
     super.initState();
   }
