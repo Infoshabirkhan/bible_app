@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../Models/Repo/advertisement_repo.dart';
+
 
 class BookCard extends StatelessWidget {
   final TaskModel data;
@@ -16,7 +18,7 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-       // await  AdvertisementRepo.createInterstitialAd();
+        await  AdvertisementRepo.createInterstitialAd();
 
         Navigator.of(context).push(MaterialPageRoute(builder: (context){
 
@@ -24,7 +26,7 @@ class BookCard extends StatelessWidget {
         }));
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             border: Border(
                 bottom: BorderSide(
                     color: Colors.grey
@@ -36,14 +38,12 @@ class BookCard extends StatelessWidget {
           children: [
 
 
-            Expanded(child: Container(
-              child: Checkbox(
-                onChanged: (x) {
+            Expanded(child: Checkbox(
+              onChanged: (x) {
 
-                  context.read<BibleTaskCubit>().update(model: TaskModel(bookName: data.bookName, id: data.id, documentId: data.documentId, readStatus: !data.readStatus, totalChapters: data.totalChapters, notes: 'notes', createdDate: 'createdDate',completedChapters: data.completedChapters, readChapters: data.readChapters));
+                context.read<BibleTaskCubit>().update(model: TaskModel(bookName: data.bookName, id: data.id, documentId: data.documentId, readStatus: !data.readStatus, totalChapters: data.totalChapters, notes: 'notes', createdDate: 'createdDate',completedChapters: data.completedChapters, readChapters: data.readChapters));
 //                                  context.read<BibleTaskCubit>().addNew(model: TaskModel(bookName: data.bookName, chapterName: '1', notes: 'Dummy notes', createdDate: 'date', readStatus: true, id: data.id));
-                }, value:data.readStatus,
-              ),
+              }, value:data.readStatus,
             ),),
 
             Expanded(
@@ -63,7 +63,7 @@ class BookCard extends StatelessWidget {
 
                   Expanded(child: Center(child: Text(data.totalChapters.toString(),style: GoogleFonts.poppins(),)),),
 
-                  Expanded(child: Icon(Icons.arrow_forward_ios))
+                  const Expanded(child: Icon(Icons.arrow_forward_ios))
                 ],
               ),),
 

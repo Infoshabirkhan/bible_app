@@ -1,4 +1,5 @@
 import 'package:bible_app/Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
+import 'package:bible_app/Models/Repo/advertisement_repo.dart';
 import 'package:bible_app/Models/Repo/bible_task_repo.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:bible_app/Views/Widgets/my_banner_ad_widget.dart';
@@ -21,7 +22,7 @@ class EditTaskScreen extends StatefulWidget {
 class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   void initState() {
-    // AdvertisementRepo.showInterstitialAd();
+    AdvertisementRepo.showInterstitialAd();
     // TODO: implement initState
     super.initState();
   }

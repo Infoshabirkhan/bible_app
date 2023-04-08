@@ -147,14 +147,3 @@ class _BookListScreenState extends State<BookListScreen> {
 
 
 
-//      body: BlocBuilder<BibleBooksCubit, BibleBooksState>(
-//         builder: (context, state) {
-//
-//           if(state is BibleBooksLoaded){
-//
-//           return BookList(list: state.model,);
-//           }else  {
-//             return Center(child: CircularProgressIndicator(),);
-//           }
-//         },
-//       ),
