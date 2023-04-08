@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC7yS16LE4pIh0dlQ8AbdKFN9aVC9wkD7w',
-    appId: '1:736921466167:android:57e82c4eb5be4df70ed6b2',
+    appId: '1:736921466167:android:43256b9134c5c6e00ed6b2',
     messagingSenderId: '736921466167',
     projectId: 'book-tracker-62d8a',
     storageBucket: 'book-tracker-62d8a.appspot.com',
@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAp9e_gip-nqa8b-KN5waQqes-nhRx8PUI',
-    appId: '1:736921466167:ios:26aac0808e7c82c00ed6b2',
+    appId: '1:736921466167:ios:5a06ee47dde0193b0ed6b2',
     messagingSenderId: '736921466167',
     projectId: 'book-tracker-62d8a',
     storageBucket: 'book-tracker-62d8a.appspot.com',
-    iosClientId: '736921466167-raeo50im8aksgp8iu4710qu9onlf7hfk.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bibleApp',
+    iosClientId: '736921466167-4ad2se8rtqjk127j5mvk9rppkisvcruu.apps.googleusercontent.com',
+    iosBundleId: 'com.fluttersoul.bibletracker',
   );
 }

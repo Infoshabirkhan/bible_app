@@ -42,7 +42,7 @@ dependencies:
   firebase_core: ^2.6.1
   firebase_auth: ^4.2.8
   cloud_firestore: ^4.4.2
-#  google_mobile_ads: ^2.3.0
+  google_mobile_ads: ^2.3.0
   shimmer: ^2.0.0
   firebase_storage: ^11.0.16
   image_picker: ^0.8.7

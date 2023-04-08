@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
 import 'Views/authentication_screen/login_screen/login_screen.dart';
@@ -20,7 +21,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // await MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

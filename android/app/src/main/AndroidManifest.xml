@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bible_app">
+    package="com.fluttersoul.bibletracker">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="bible_app"

@@ -29,6 +29,49 @@
             {
               "client_id": "736921466167-7abi2sdjtn75sk6rm4q39vjdrugbgt7k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "736921466167-4ad2se8rtqjk127j5mvk9rppkisvcruu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fluttersoul.bibletracker"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736921466167:android:43256b9134c5c6e00ed6b2",
+        "android_client_info": {
+          "package_name": "com.fluttersoul.bibletracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736921466167-7abi2sdjtn75sk6rm4q39vjdrugbgt7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7yS16LE4pIh0dlQ8AbdKFN9aVC9wkD7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736921466167-7abi2sdjtn75sk6rm4q39vjdrugbgt7k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "736921466167-4ad2se8rtqjk127j5mvk9rppkisvcruu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fluttersoul.bibletracker"
+              }
             }
           ]
         }
