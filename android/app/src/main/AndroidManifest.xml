@@ -2,9 +2,9 @@
     package="com.fluttersoul.bibletracker">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="bible_app"
+        android:label="Tome Tracker"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
 <!--              Admob initialization dummy id-->
        <meta-data
