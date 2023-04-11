@@ -1,8 +1,10 @@
 import 'package:bible_app/Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
+import 'package:bible_app/Controllers/notes_controller.dart';
 import 'package:bible_app/Models/Repo/advertisement_repo.dart';
 import 'package:bible_app/Models/Repo/bible_task_repo.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:bible_app/Views/Widgets/my_banner_ad_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +23,7 @@ class EditTaskScreen extends StatefulWidget {
 }
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
+
   @override
   void initState() {
     AdvertisementRepo.showInterstitialAd();
@@ -29,8 +32,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   }
 
   TextEditingController notesController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
-  Function(DateTime)? dateTime;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -85,64 +88,92 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                             //  if (list[index]['status'] ==
                                               if (list[index].status ==
                                                   false) {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Form(
-                                                        key: formKey,
-                                                        child: NotesDailog(
-                                                          selectedDate: dateTime,
-                                                          controller:
-                                                              notesController,
-                                                          onSubmit: () async {
-                                                            if (formKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                              // list[index][
-                                                              //         'status'] =
-                                                              list[index].status =
+                                                print('==================== value ${list[index].status}');
+                                                // showDialog(
+                                                //     context: context,
+                                                //     builder: (context) {
+                                                //       return Form(
+                                                //         key: formKey,
+                                                //         child: NotesDailog(
+                                                //           dateController: dateController,
+                                                //           controller:
+                                                //               notesController,
+                                                //           onSubmit: () async {
+                                                //             if (formKey
+                                                //                 .currentState!
+                                                //                 .validate()) {
+                                                //               var myList = data['read_chapters'];
+                                                //
+                                                //               myList[index]['status'] = value;
+                                                //
+                                                //
+                                                //                Timestamp timeStamp = Timestamp.fromDate(NotesController.dateTime!);
+                                                //
+                                                //             List myNotes = myList[index]['notes'];
+                                                //             myNotes.add({
+                                                //               "note" : notesController
+                                                //                       .text
+                                                //                       .trim(),
+                                                //               "date_time" :timeStamp
+                                                //             });
+                                                //
+                                                //
+                                                //
+                                                //                await BibleTaskRepo
+                                                //                   .taskRef
+                                                //                   .doc(widget
+                                                //                       .model
+                                                //                       .documentId)
+                                                //                   .update({
+                                                //                 "read_chapters":
+                                                //                 myList
+                                                //               });
+                                                //               context
+                                                //                   .read<
+                                                //                       ChapterCubit>()
+                                                //                   .setChapter(
+                                                //                       value:
+                                                //                           value);
+                                                //               notesController
+                                                //                   .clear();
+                                                //               dateController.clear();
+                                                //
+                                                //               NotesController.dateTime = null;
+                                                //               Navigator.of(
+                                                //                       context)
+                                                //                   .pop();
+                                                //             } else {}
+                                                //           },
+                                                //         ),
+                                                //       );
+                                                //     });
 
-                                                                  value;
-                                                              list[index].notes[index].note =
-                                                                  notesController
-                                                                      .text
-                                                                      .trim();
+                                                var myList = data['read_chapters'];
+                                                myList[index]['status'] = value;
+                                                list[index].status = value;
 
-                                                              dateTime;
-                                                              //  print('============== after list $list');
-                                                              await BibleTaskRepo
-                                                                  .taskRef
-                                                                  .doc(widget
-                                                                      .model
-                                                                      .documentId)
-                                                                  .update({
-                                                                "read_chapters":
-                                                                    list
-                                                              });
-                                                              context
-                                                                  .read<
-                                                                      ChapterCubit>()
-                                                                  .setChapter(
-                                                                      value:
-                                                                          value);
-                                                              notesController
-                                                                  .clear();
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            } else {}
-                                                          },
-                                                        ),
-                                                      );
-                                                    });
+                                                await BibleTaskRepo.taskRef
+                                                    .doc(
+                                                    widget.model.documentId)
+                                                    .update({
+                                                  "read_chapters": myList
+                                                });
+                                                context
+                                                    .read<ChapterCubit>()
+                                                    .setChapter(value: value);
+
                                               } else {
+                                                print('==================== value ${list[index].status}');
+
+                                                var myList = data['read_chapters'];
+                                               myList[index]['status'] = value;
                                                 list[index].status = value;
 
                                                 await BibleTaskRepo.taskRef
                                                     .doc(
                                                         widget.model.documentId)
                                                     .update({
-                                                  "read_chapters": list
+                                                  "read_chapters": myList
                                                 });
                                                 context
                                                     .read<ChapterCubit>()

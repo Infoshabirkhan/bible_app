@@ -18,15 +18,15 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 
     emit(BibleTaskLoading());
 
-    if(await InternetConnectivity.isNotConnected()){
-
-      await Future.delayed(const Duration(seconds: 1));
-
-      emit(BibleTaskNoInternet());
-
-
-      return;
-    }
+    // if(await InternetConnectivity.isNotConnected()){
+    //
+    //   await Future.delayed(const Duration(seconds: 1));
+    //
+    //   emit(BibleTaskNoInternet());
+    //
+    //
+    //   return;
+    // }
     var list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
 
 

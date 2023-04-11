@@ -7,12 +7,16 @@ class MyTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final int maxLines;
   final bool? obscureText;
+  final bool? enabled;
 
+  final OutlineInputBorder? disabledBorder;
   final String? Function(String?)? validator;
 
   const MyTextField({
     Key? key,
 
+    this.enabled = true,
+    this.disabledBorder,
     this.maxLines = 1,
     this.border,
     this.validator,
@@ -25,12 +29,15 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       maxLines: maxLines,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
       obscureText: obscureText!,
       controller: controller,
       decoration:InputDecoration(
+
+        disabledBorder: disabledBorder,
         border: border,
         suffixIcon: suffixIcon,
         hintText: hintText,

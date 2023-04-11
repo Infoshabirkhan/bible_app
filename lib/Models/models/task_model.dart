@@ -82,7 +82,7 @@ class Note {
   });
 
   String note;
-  Timestamp dateTime;
+  Timestamp? dateTime;
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
     note: json["note"],

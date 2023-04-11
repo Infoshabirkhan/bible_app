@@ -13,11 +13,11 @@ class ChapterCubit extends Cubit<ChapterState> {
   getChapter() async {
     emit(ChapterLoading());
 
-    if (await InternetConnectivity.isNotConnected()) {
-      await Future.delayed(Duration(seconds: 2));
-      emit(ChapterNoInternet());
-      return;
-    }
+    // if (await InternetConnectivity.isNotConnected()) {
+    //   await Future.delayed(Duration(seconds: 2));
+    //   emit(ChapterNoInternet());
+    //   return;
+    // }
     var response = await ChapterTaskRepo.getChapter();
 
 

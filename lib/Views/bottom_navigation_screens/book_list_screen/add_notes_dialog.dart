@@ -1,16 +1,17 @@
+import 'package:bible_app/Controllers/notes_controller.dart';
 import 'package:bible_app/Views/Widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotesDailog extends StatefulWidget {
-  final Function(DateTime)? selectedDate;
   final TextEditingController controller;
+  final TextEditingController dateController;
   final VoidCallback onSubmit;
 
   const NotesDailog({
     Key? key,
-    required this.selectedDate,
+    required this.dateController,
     required this.controller,
     required this.onSubmit,
   }) : super(key: key);
@@ -96,6 +97,8 @@ class _NotesDailogState extends State<NotesDailog> {
               style: GoogleFonts.raleway(),
             ),
 
+            SizedBox(height: 5.sp,),
+
             InkWell(
               onTap: () async {
             var date =   await  showDatePicker(
@@ -105,21 +108,43 @@ class _NotesDailogState extends State<NotesDailog> {
                   lastDate: DateTime(2099),
                 );
 
-            dateTime = date;
+         if(date !=null){
+           NotesController.dateTime = date;
 
-            setState(() {
+           widget.dateController.text =  NotesController.getDate(date);
+           setState(() {
 
-            });
+           });
+         }
 
               },
-              child: Container(
-                padding: EdgeInsets.all(5.sp),
-                margin: EdgeInsets.only(top:5.sp),
-                height: 40.sp,
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey)),
-                child: dateTime == null ? SizedBox():Text('${dateTime?.month}-${dateTime?.day}-${dateTime?.year}'),
+            child:  MyTextField(
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey
+                )
               ),
+              enabled: false,
+              suffixIcon: Icon(Icons.calendar_today),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Date is required';
+                  } else {
+                    return null;
+                  }
+                },
+                border: const OutlineInputBorder(),
+                controller: widget.dateController,
+                hintText: 'MM/DD/YYYY',
+              ),
+              // child: Container(
+              //   padding: EdgeInsets.all(5.sp),
+              //   margin: EdgeInsets.only(top:5.sp),
+              //   height: 40.sp,
+              //   decoration:
+              //       BoxDecoration(border: Border.all(color: Colors.grey)),
+              //   child: dateTime == null ? SizedBox():Text('${dateTime?.month}-${dateTime?.day}-${dateTime?.year}'),
+              // ),
             ),
             SizedBox(
               height: 10.sp,
@@ -148,7 +173,7 @@ class _NotesDailogState extends State<NotesDailog> {
                         )
                       : ElevatedButton(
                           onPressed: () async {
-                            if (widget.controller.text.isNotEmpty) {
+                            if (widget.controller.text.isNotEmpty && widget.dateController.text.isNotEmpty) {
                               loading = true;
                               setState(() {});
                               widget.onSubmit();

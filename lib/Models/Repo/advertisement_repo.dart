@@ -24,13 +24,12 @@ static  InterstitialAd? _interstitialAd;
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
-            print('$ad loaded');
             _interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
             _interstitialAd!.setImmersiveMode(true);
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('InterstitialAd failed to load: $error.');
+            print('InterstitialAd failed to load:.');
             _numInterstitialLoadAttempts += 1;
             _interstitialAd = null;
             if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
@@ -57,7 +56,7 @@ static  InterstitialAd? _interstitialAd;
         createInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        print('$ad onAdFailedToShowFullScreenContent: ');
         ad.dispose();
         createInterstitialAd();
       },
