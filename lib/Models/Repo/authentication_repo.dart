@@ -45,15 +45,14 @@ class AuthenticationRepo {
           for (var i = 0; i < item['bible_chapters']; i++) {
             readChapters.add({
               "status" : false,
-              "notes" : null,
-              "date_time" : null
+              "notes" :[],
             });
           }
 
            docRef.add({
             'id': item['id'],
             "book_name": item['name'],
-            "read_chapters": readChapters,
+              "read_chapters": readChapters,
             "read_status": false,
             "total_chapters": item['bible_chapters'],
 //       "chapter_name" : null,

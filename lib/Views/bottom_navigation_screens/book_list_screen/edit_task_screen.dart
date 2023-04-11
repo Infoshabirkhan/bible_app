@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'add_notes_dialog.dart';
+import 'notes_screen.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final TaskModel model;
@@ -29,6 +30,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
   TextEditingController notesController = TextEditingController();
 
+  Function(DateTime)? dateTime;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -51,6 +53,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData && !snapshot.hasError) {
                     var data = snapshot.data;
+
+                   var model =  TaskModel.fromJson(data!.id, data!);
                     return GridView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 20.sp),
                         itemCount: widget.model.totalChapters,
@@ -72,13 +76,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                     children: [
                                       Expanded(
                                         child: Checkbox(
-                                          value: data!['read_chapters'][index]
-                                              ['status'],
+                                          value: model.readChapters[index].status,
                                           onChanged: (bool? value) async {
                                             if (value != null) {
-                                              var list = data['read_chapters'];
+                                          //    var list = data['read_chapters'];
+                                              var list = model.readChapters;
 
-                                              if (list[index]['status'] ==
+                                            //  if (list[index]['status'] ==
+                                              if (list[index].status ==
                                                   false) {
                                                 showDialog(
                                                     context: context,
@@ -86,21 +91,24 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                                       return Form(
                                                         key: formKey,
                                                         child: NotesDailog(
+                                                          selectedDate: dateTime,
                                                           controller:
                                                               notesController,
                                                           onSubmit: () async {
                                                             if (formKey
                                                                 .currentState!
                                                                 .validate()) {
-                                                              list[index][
-                                                                      'status'] =
+                                                              // list[index][
+                                                              //         'status'] =
+                                                              list[index].status =
+
                                                                   value;
-                                                              list[index][
-                                                                      'notes'] =
+                                                              list[index].notes[index].note =
                                                                   notesController
                                                                       .text
                                                                       .trim();
 
+                                                              dateTime;
                                                               //  print('============== after list $list');
                                                               await BibleTaskRepo
                                                                   .taskRef
@@ -128,7 +136,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                                       );
                                                     });
                                               } else {
-                                                list[index]['status'] = value;
+                                                list[index].status = value;
 
                                                 await BibleTaskRepo.taskRef
                                                     .doc(
@@ -165,116 +173,117 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                                 Expanded(
                                   child: Align(
                                     alignment: Alignment.centerRight,
-                                    child: data['read_chapters'][index]
-                                                ['status'] ==
-                                            false
-                                        ? const SizedBox()
-                                        : ElevatedButton(
+                                    child:ElevatedButton(
                                             onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Dialog(
-                                                      child: Container(
-                                                        color: Colors.black,
-                                                        child: ListView(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      10.sp),
-                                                          shrinkWrap: true,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 10.sp,
-                                                            ),
-                                                            SizedBox(
-                                                              height: 50.sp,
-                                                              child: Stack(
-                                                                children: [
-                                                                  Center(
-                                                                    child: Text(
-                                                                      'Ch # ${index + 1}',
-                                                                      style: GoogleFonts
-                                                                          .raleway(
-                                                                        fontSize:
-                                                                            18.sp,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Positioned(
-                                                                    top: 10.sp,
-                                                                    right:
-                                                                        10.sp,
-                                                                    bottom: 0,
-                                                                    child:
-                                                                        IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(context)
-                                                                            .pop();
-                                                                      },
-                                                                      icon:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .close,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Divider(),
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context){
 
-                                                            SizedBox(
-                                                              height: 10.sp,
-                                                            ),
-                                                            Text(
-                                                              'Notes',
-                                                              style: GoogleFonts
-                                                                  .raleway(
-                                                                fontSize: 13.sp,
 
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5.sp,
-                                                            ),
-                                                            Text(
-                                                              data['read_chapters']
-                                                                          [
-                                                                          index]
-                                                                      [
-                                                                      'notes'] ??
-                                                                  '',
-                                                              style: GoogleFonts
-                                                                  .raleway(
-                                                                fontSize: 16.sp,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 20.sp,
-                                                            ),
-                                                            ElevatedButton(
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                              child: const Text(
-                                                                  'Close'),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10.sp,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  });
+                                                return NotesScreen(model: model,notesIndex: index,);
+                                              }));
+                                              // showDialog(
+                                              //     context: context,
+                                              //     builder: (context) {
+                                              //       return Dialog(
+                                              //         child: Container(
+                                              //           color: Colors.black,
+                                              //           child: ListView(
+                                              //             padding: EdgeInsets
+                                              //                 .symmetric(
+                                              //                     horizontal:
+                                              //                         10.sp),
+                                              //             shrinkWrap: true,
+                                              //             children: [
+                                              //               SizedBox(
+                                              //                 height: 10.sp,
+                                              //               ),
+                                              //               SizedBox(
+                                              //                 height: 50.sp,
+                                              //                 child: Stack(
+                                              //                   children: [
+                                              //                     Center(
+                                              //                       child: Text(
+                                              //                         'Ch # ${index + 1}',
+                                              //                         style: GoogleFonts
+                                              //                             .raleway(
+                                              //                           fontSize:
+                                              //                               18.sp,
+                                              //                           fontWeight:
+                                              //                               FontWeight.w600,
+                                              //                         ),
+                                              //                       ),
+                                              //                     ),
+                                              //                     Positioned(
+                                              //                       top: 10.sp,
+                                              //                       right:
+                                              //                           10.sp,
+                                              //                       bottom: 0,
+                                              //                       child:
+                                              //                           IconButton(
+                                              //                         onPressed:
+                                              //                             () {
+                                              //                           Navigator.of(context)
+                                              //                               .pop();
+                                              //                         },
+                                              //                         icon:
+                                              //                             const Icon(
+                                              //                           Icons
+                                              //                               .close,
+                                              //                           color: Colors
+                                              //                               .white,
+                                              //                         ),
+                                              //                       ),
+                                              //                     ),
+                                              //                   ],
+                                              //                 ),
+                                              //               ),
+                                              //               Divider(),
+                                              //
+                                              //               SizedBox(
+                                              //                 height: 10.sp,
+                                              //               ),
+                                              //               Text(
+                                              //                 'Notes',
+                                              //                 style: GoogleFonts
+                                              //                     .raleway(
+                                              //                   fontSize: 13.sp,
+                                              //
+                                              //                 ),
+                                              //               ),
+                                              //               SizedBox(
+                                              //                 height: 5.sp,
+                                              //               ),
+                                              //               Text(
+                                              //                 data['read_chapters']
+                                              //                             [
+                                              //                             index]
+                                              //                         [
+                                              //                         'notes'] ??
+                                              //                     '',
+                                              //                 style: GoogleFonts
+                                              //                     .raleway(
+                                              //                   fontSize: 16.sp,
+                                              //                 ),
+                                              //               ),
+                                              //               SizedBox(
+                                              //                 height: 20.sp,
+                                              //               ),
+                                              //               ElevatedButton(
+                                              //                 onPressed: () {
+                                              //                   Navigator.of(
+                                              //                           context)
+                                              //                       .pop();
+                                              //                 },
+                                              //                 child: const Text(
+                                              //                     'Close'),
+                                              //               ),
+                                              //               SizedBox(
+                                              //                 height: 10.sp,
+                                              //               ),
+                                              //             ],
+                                              //           ),
+                                              //         ),
+                                              //       );
+                                              //     });
                                             },
                                             child: const Text('View Notes'),
                                           ),

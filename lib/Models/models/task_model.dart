@@ -10,7 +10,7 @@ class TaskModel {
   final String documentId;
   final bool readStatus;
   final List completedChapters;
-  final List readChapters;
+  final List<ReadChapter> readChapters;
 
   TaskModel({
     required this.bookName,
@@ -36,7 +36,8 @@ class TaskModel {
       createdDate: json['created_date'],
 
       //json['read_chapters']
-      readChapters: json['read_chapters'],
+      // readChapters: json['read_chapters'],
+      readChapters: List<ReadChapter>.from(json["read_chapters"].map((x) => ReadChapter.fromJson(x))),
     );
   }
 
@@ -50,4 +51,47 @@ class TaskModel {
       "completed_chapter" : model.completedChapters
     };
   }
+
+
+
 }
+class ReadChapter {
+  ReadChapter({
+    required this.status,
+   required this.notes,
+  });
+
+  bool status;
+  List<Note> notes;
+
+  factory ReadChapter.fromJson(Map<String, dynamic> json) => ReadChapter(
+    status: json["status"],
+    notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
+  };
+}
+
+class Note {
+  Note({
+   required this.note,
+   required this.dateTime,
+  });
+
+  String note;
+  Timestamp dateTime;
+
+  factory Note.fromJson(Map<String, dynamic> json) => Note(
+    note: json["note"],
+    dateTime: json["date_time"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "note": note,
+    "date_time": dateTime,
+  };
+}
+

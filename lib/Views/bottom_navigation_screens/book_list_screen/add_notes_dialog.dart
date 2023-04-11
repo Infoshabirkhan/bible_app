@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotesDailog extends StatefulWidget {
+  final Function(DateTime)? selectedDate;
   final TextEditingController controller;
   final VoidCallback onSubmit;
 
   const NotesDailog({
     Key? key,
+    required this.selectedDate,
     required this.controller,
     required this.onSubmit,
   }) : super(key: key);
@@ -20,6 +22,7 @@ class NotesDailog extends StatefulWidget {
 class _NotesDailogState extends State<NotesDailog> {
   var loading = false;
 
+  DateTime ? dateTime;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -84,6 +87,39 @@ class _NotesDailogState extends State<NotesDailog> {
               border: const OutlineInputBorder(),
               controller: widget.controller,
               hintText: 'Type here...',
+            ),
+            SizedBox(
+              height: 10.sp,
+            ),
+            Text(
+              'Date',
+              style: GoogleFonts.raleway(),
+            ),
+
+            InkWell(
+              onTap: () async {
+            var date =   await  showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2011),
+                  lastDate: DateTime(2099),
+                );
+
+            dateTime = date;
+
+            setState(() {
+
+            });
+
+              },
+              child: Container(
+                padding: EdgeInsets.all(5.sp),
+                margin: EdgeInsets.only(top:5.sp),
+                height: 40.sp,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
+                child: dateTime == null ? SizedBox():Text('${dateTime?.month}-${dateTime?.day}-${dateTime?.year}'),
+              ),
             ),
             SizedBox(
               height: 10.sp,

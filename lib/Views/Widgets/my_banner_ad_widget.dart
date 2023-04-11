@@ -32,23 +32,24 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
 
   @override
   void dispose() {
-    myBanner.dispose();
+   // myBanner.dispose();
     // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        margin: EdgeInsets.only(top: 15.sp),
-        width: myBanner.size.width.toDouble(),
-        height: myBanner.size.height.toDouble(),
-        child: AdWidget(
-          ad: myBanner,
-        ),
-      ),
-    );
+    return Container();
+    // return Align(
+    //   alignment: Alignment.bottomCenter,
+    //   child: Container(
+    //     margin: EdgeInsets.only(top: 15.sp),
+    //     width: myBanner.size.width.toDouble(),
+    //     height: myBanner.size.height.toDouble(),
+    //     child: AdWidget(
+    //       ad: myBanner,
+    //     ),
+    //   ),
+    // );
   }
 }
