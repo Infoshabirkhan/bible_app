@@ -11,8 +11,8 @@ class AdvertisementID{
 
 
 
-  // static var  interstitialAndroidId = 'ca-app-pub-3940256099942544/1033173712'; // test Id
-  static var  interstitialAndroidId = 'ca-app-pub-3984446731921802/9533313818'; // actual Id
+   static var  interstitialAndroidId = 'ca-app-pub-3940256099942544/1033173712'; // test Id
+ // static var  interstitialAndroidId = 'ca-app-pub-3984446731921802/9533313818'; // actual Id
   // static var  interstitialIosId = 'ca-app-pub-3940256099942544/4411468910'; // test Id
   static var  interstitialIosId = 'ca-app-pub-3984446731921802/3123818136'; // actual Id
 

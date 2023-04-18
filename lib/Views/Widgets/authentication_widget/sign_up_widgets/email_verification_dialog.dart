@@ -17,7 +17,8 @@ class EmailVerificationDialog extends StatelessWidget {
 
           SizedBox(height: 20.sp,),
           SizedBox(
-              height: 90.sp,
+
+                         height: 90.sp,
               width: 90.sp,
               child: Image.asset('assets/images/mail.png', color: Colors.red,)),
           SizedBox(height: 20.sp,),

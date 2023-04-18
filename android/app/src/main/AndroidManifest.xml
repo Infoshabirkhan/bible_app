@@ -1,15 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fluttersoul.bibletracker">
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="Tome Tracker"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
-<!--              Admob initialization dummy id-->
+<!--              Admob initialization actual id-->
        <meta-data
            android:name="com.google.android.gms.ads.APPLICATION_ID"
-           android:value="ca-app-pub-3984446731921802~8794947211"/>
+           android:value="ca-app-pub-3940256099942544~3347511713"/>
+<!--       actual id    android:value="ca-app-pub-3984446731921802~8794947211"/>-->
 
        <activity
             android:name=".MainActivity"
