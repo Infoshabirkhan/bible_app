@@ -1,3 +1,4 @@
+import 'package:bible_app/Views/Widgets/delete_account_dialog.dart';
 import 'package:bible_app/Views/Widgets/logout_alert_dialog.dart';
 import 'package:bible_app/Views/Widgets/my_banner_ad_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -110,6 +111,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   leading: const Icon(Icons.person),
                   title: const Text('Edit Profile'),
+                ),
+                ListTile(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const DeleteAccountDialog();
+                        });
+                  },
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Delete Account'),
                 ),
                 ListTile(
                   onTap: () {

@@ -2,6 +2,7 @@ import 'package:bible_app/Models/Repo/authentication_repo.dart';
 import 'package:bible_app/Models/utils/internet_connectivity.dart';
 import 'package:bible_app/Views/authentication_screen/login_screen/login_screen.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -73,6 +74,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
    //   return LoginScreen();
    // }));
 
+  }
+  
+  
+  deleteAccount(String password)async{
+    try{
+      var user=FirebaseAuth.instance.currentUser;
+      String id=user!.uid;
+      emit(AuthenticationDeleting());
+      var uc=await user!.reauthenticateWithCredential(EmailAuthProvider.credential(email: user.email!, password: password));
+      if(uc.user!=null) {
+        await uc.user!.delete();
+        await FirebaseFirestore.instance.collection("Users").doc(id).delete();
+        emit(AuthenticationDeleted());
+      }
+    } catch(e){
+      if(e is FirebaseException){
+        emit(AuthenticationDeletionError(err: e.message.toString()));
+      }
+      else if(e is FirebaseAuthException){
+        emit(AuthenticationDeletionError(err: e.message.toString()));
+      }
+    }
   }
 
 }
