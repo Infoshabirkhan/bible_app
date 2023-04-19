@@ -13,7 +13,7 @@ class AdvertisementRepo{
     contentUrl: 'http://foo.com/bar.html',
     nonPersonalizedAds: true,
   );
-static  InterstitialAd? _interstitialAd;
+static  InterstitialAd? interstitialAd;
  static int _numInterstitialLoadAttempts = 0;
 
  static Future<void> createInterstitialAd() async {
@@ -24,14 +24,14 @@ static  InterstitialAd? _interstitialAd;
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
-            _interstitialAd = ad;
+            interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
-            _interstitialAd!.setImmersiveMode(true);
+            interstitialAd!.setImmersiveMode(true);
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load:.');
             _numInterstitialLoadAttempts += 1;
-            _interstitialAd = null;
+            interstitialAd = null;
             if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
               createInterstitialAd();
             }
@@ -43,11 +43,11 @@ static  InterstitialAd? _interstitialAd;
 
  static void showInterstitialAd() {
 
-    if (_interstitialAd == null) {
+    if (interstitialAd == null) {
       print('Warning: attempt to show interstitial before loaded.');
       return;
     }
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
           print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
@@ -61,8 +61,8 @@ static  InterstitialAd? _interstitialAd;
         createInterstitialAd();
       },
     );
-    _interstitialAd!.show();
-    _interstitialAd = null;
+    interstitialAd!.show();
+    interstitialAd = null;
   }
 
 
