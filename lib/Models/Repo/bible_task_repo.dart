@@ -1,20 +1,41 @@
+import 'package:bible_app/Models/models/chapter_model.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'chapter_task_repo.dart';
+
 class BibleTaskRepo {
   // static var user  = FirebaseAuth.instance.currentUser;
-static  List completedTask = [];
+// static  List completedTask = [];
 
   static var taskRef = FirebaseFirestore.instance
       .collection('BibleTask')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('userTask');
-  static Future<List<TaskModel>?> getTask({bool? isSortAscending = false}) async {
 
-    completedTask.clear();
+
+// static var taskRef = FirebaseFirestore.instance
+//     .collection('Books')
+//     .doc(FirebaseAuth.instance.currentUser!.uid)
+//     .collection('books');
+
+
+
+
+static Future<TaskModel> getNewBooks()async{
+ var data =await  taskRef.doc('2KHsCewN1nzgMPXCmHSG').get();
+ TaskModel model = TaskModel.fromJson(data.id, data);
+ return model;
+
+}
+static Future<List<TaskModel>?> getTask({bool? isSortAscending = false}) async {
+
+    //completedTask.clear();
+
+  List completedChapters = [];
     List<TaskModel> list = [];
 
     try {
@@ -39,16 +60,20 @@ static  List completedTask = [];
 
 
 
+        ChapterModel.model.totalChapters = list.length;
         for(var item in list){
 
           if(item.readStatus == true){
-            completedTask.add(true);
+
+            completedChapters.add(true);
+            // completedTask.add(true);
           }else{
 
           }
         }
 
 
+       ChapterModel.model.completedChapters= completedChapters.length;
         return list;
       }
     } on FirebaseException catch (e) {
@@ -80,6 +105,17 @@ await     taskRef.add({
 
   try {
     await   taskRef.doc(model.documentId).update(TaskModel.toJson(model));
+
+
+    if(model.readStatus){
+     ++ChapterModel.model.readBooks;
+    }else{
+     -- ChapterModel.model.readBooks;
+    }
+    await  ChapterTaskRepo.chapterRef..collection('books').doc(ChapterTaskRepo.bookId).update(
+        {"read_books" :  ChapterModel.model.readBooks});
+
+
 
       return true;
   } on FirebaseException catch (e) {

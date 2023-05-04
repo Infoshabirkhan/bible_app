@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'all_books_screen/all_books_screen.dart';
 import 'book_list_screen/book_list_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
@@ -44,19 +45,19 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             BottomNavItems(
               title: 'Books',
               icon: CupertinoIcons.book,
-              currentIndex: 1,
+              currentIndex: 2,
               pageController: pageController,
             ),
             BottomNavItems(
               title: 'Sorted',
               icon: Icons.sort,
-              currentIndex: 2,
+              currentIndex: 3,
               pageController: pageController,
             ),
             BottomNavItems(
               title: 'Profile',
               icon: Icons.person,
-              currentIndex: 3,
+              currentIndex: 4,
               pageController: pageController,
             ),
           ],
@@ -65,8 +66,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [
-          ProgressReportScreen(),
+        children:  [
+          AllBooksScreen(pageController: pageController,),
+          ProgressReportScreen(pageController: pageController,),
           BookListScreen(),
           SortedOrderScreen(),
           ProfileScreen(),

@@ -27,7 +27,10 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
     //
     //   return;
     // }
+
+
     var list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
+ //  var list = await BibleTaskRepo.getNewBooks();
 
 
 

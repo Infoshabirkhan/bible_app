@@ -5,11 +5,11 @@ class TaskModel {
   final String bookName;
   final int totalChapters;
   final String notes;
-  final String? createdDate;
+  final Timestamp createdDate;
   final int id;
   final String documentId;
   final bool readStatus;
-  final List completedChapters;
+  final int completedChapters;
   final List<ReadChapter> readChapters;
 
   TaskModel({
@@ -26,13 +26,14 @@ class TaskModel {
 
   factory TaskModel.fromJson(String documentId, DocumentSnapshot<Map<String, dynamic>> json) {
     return TaskModel(
-      id: json['id'],
-      completedChapters: json['completed_chapter'],
+      id: json["id"],
+      completedChapters: json["completed_chapter"],
       documentId: documentId,
-      readStatus: json['read_status'],
-      bookName: json['book_name'],
-      totalChapters: json['total_chapters'],
-      notes: json['notes'],
+      readStatus: json["read_status"],
+      bookName: json["book_name"],
+      totalChapters: json["total_chapters"],
+      notes: json["notes"],
+      // createdDate: json['created_date'],
       createdDate: json['created_date'],
 
       //json['read_chapters']

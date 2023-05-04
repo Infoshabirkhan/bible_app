@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'Controllers/Cubits/add_new_book_cubit/add_new_book_cubit.dart';
+import 'Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
 import 'Views/authentication_screen/login_screen/login_screen.dart';
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BibleTaskCubit()),
         BlocProvider(create: (context) => BibleBooksCubit()),
         BlocProvider(create: (context) => ChapterCubit()),
+        BlocProvider(create: (context) => AddNewBookCubit()),
+        BlocProvider(create: (context) => BookListCubit(0)),
       ],
       child: ScreenUtilInit(
 

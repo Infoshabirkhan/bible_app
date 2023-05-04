@@ -1,3 +1,4 @@
+import 'package:bible_app/Models/Repo/chapter_task_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +58,21 @@ class AuthenticationRepo {
             "total_chapters": item['bible_chapters'],
 //       "chapter_name" : null,
 
-            'completed_chapter': [],
+            'completed_chapter': 0,
             "notes": '',
-            "created_date": null
+            "created_date": Timestamp.now()
           });
           print('==================== added $item');
         }
 
+      await  ChapterTaskRepo.chapterRef.collection('books').doc("bible").set({
+
+
+         "total_chapter" : 1189,
+         "completed_chapters": 0,
+         "total_books": 66,
+         "read_books" : 0,
+       });
 
        await FirebaseAuth.instance.signOut();
         await Future.delayed(Duration(seconds: 3));

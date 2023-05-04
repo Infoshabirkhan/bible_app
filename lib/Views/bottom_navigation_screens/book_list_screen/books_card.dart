@@ -8,70 +8,74 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Models/Repo/advertisement_repo.dart';
 
-
 class BookCard extends StatelessWidget {
   final TaskModel data;
 
-  const BookCard({Key? key, required this.data }) : super(key: key);
+  const BookCard({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-
-        if(AdvertisementRepo.interstitialAd == null){
-          await  AdvertisementRepo.createInterstitialAd();
-
+        if (AdvertisementRepo.interstitialAd == null) {
+          await AdvertisementRepo.createInterstitialAd();
         }
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context){
-
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return EditTaskScreen(model: data);
         }));
       },
       child: Container(
         decoration: const BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    color: Colors.grey
-                )
-            )
-        ),
+            border: Border(bottom: BorderSide(color: Colors.grey))),
         height: 70.sp,
         child: Row(
           children: [
-
-
-            Expanded(child: Checkbox(
-              onChanged: (x) {
-
-                context.read<BibleTaskCubit>().update(model: TaskModel(bookName: data.bookName, id: data.id, documentId: data.documentId, readStatus: !data.readStatus, totalChapters: data.totalChapters, notes: 'notes', createdDate: 'createdDate',completedChapters: data.completedChapters, readChapters: data.readChapters));
+            Expanded(
+              child: Checkbox(
+                onChanged: (x) {
+                  context.read<BibleTaskCubit>().update(
+                      model: TaskModel(
+                          bookName: data.bookName,
+                          id: data.id,
+                          documentId: data.documentId,
+                          readStatus: !data.readStatus,
+                          totalChapters: data.totalChapters,
+                          notes: 'notes',
+                          createdDate: data.createdDate,
+                          completedChapters: data.completedChapters,
+                          readChapters: data.readChapters));
 //                                  context.read<BibleTaskCubit>().addNew(model: TaskModel(bookName: data.bookName, chapterName: '1', notes: 'Dummy notes', createdDate: 'date', readStatus: true, id: data.id));
-              }, value:data.readStatus,
-            ),),
-
+                },
+                value: data.readStatus,
+              ),
+            ),
             Expanded(
               flex: 5,
               child: Row(
                 children: [
-                  Expanded(child:
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: FittedBox(
-                      child: Text(
-                        data.bookName, style: GoogleFonts.poppins(
-
-                      ),),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        child: Text(
+                          data.bookName,
+                          style: GoogleFonts.poppins(),
+                        ),
+                      ),
                     ),
-                  ),),
-
-                  Expanded(child: Center(child: Text(data.totalChapters.toString(),style: GoogleFonts.poppins(),)),),
-
+                  ),
+                  Expanded(
+                    child: Center(
+                        child: Text(
+                      data.totalChapters.toString(),
+                      style: GoogleFonts.poppins(),
+                    )),
+                  ),
                   const Expanded(child: Icon(Icons.arrow_forward_ios))
                 ],
-              ),),
-
-
+              ),
+            ),
           ],
         ),
       ),
@@ -79,11 +83,9 @@ class BookCard extends StatelessWidget {
   }
 }
 
-
-
 //    return BlocListener<BibleTaskCubit, BibleTaskState>(
 //   listener: (context, state) {
-// 
+//
 //     if(state is BibleTaskAddingEntry ){
 //       ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Loading')));
 //     } if(state is BibleTaskDataAdded ){
@@ -102,8 +104,8 @@ class BookCard extends StatelessWidget {
 //                 child: Container(
 //                   child: Row(
 //                     children: [
-// 
-// 
+//
+//
 //                       Spacer(),
 //                       Expanded(
 //                         flex: 5,
@@ -114,22 +116,22 @@ class BookCard extends StatelessWidget {
 //                               alignment: Alignment.centerLeft,
 //                               child: FittedBox(
 //                                 child: Text('Books', style: GoogleFonts.poppins(
-// 
+//
 //                                 ),),
 //                               ),
 //                             ),),
-// 
-// 
-// 
+//
+//
+//
 //                             Expanded(child: Center(
 //                               child: FittedBox(
 //                                 child: Text('Chapter',style: GoogleFonts.poppins(
-// 
-// 
+//
+//
 //                                 ),),
 //                               ),
 //                             ),),
-// 
+//
 //                             Spacer()
 //                             // Expanded(child: Center(
 //                             //
@@ -140,23 +142,23 @@ class BookCard extends StatelessWidget {
 //                             //     ),),
 //                             //   ),
 //                             // ),),
-// 
-// 
+//
+//
 //                           ],
 //                         ),),
-// 
-//                       
-// 
+//
+//
+//
 //                     ],
 //                   ),
 //                 ),
 //               ),
-// 
-// 
+//
+//
 //               Expanded(
 //                 flex: 9,
 //                 child: ListView.builder(
-// 
+//
 //                     padding: EdgeInsets.symmetric(horizontal: 5.sp,),
 //                     itemCount: state.model.length,
 //                     itemBuilder: (context, index) {
@@ -172,18 +174,18 @@ class BookCard extends StatelessWidget {
 //                         height: 70.sp,
 //                         child: Row(
 //                           children: [
-// 
-// 
+//
+//
 //                             Expanded(child: Container(
 //                               child: Checkbox(
 //                                 onChanged: (x) {
-// 
+//
 //                                   context.read<BibleTaskCubit>().update(model: TaskModel(bookName: data.bookName, id: data.id, documentId: data.documentId, readStatus: !data.readStatus, chapterName: data.chapterName, notes: 'notes', createdDate: 'createdDate',));
 // //                                  context.read<BibleTaskCubit>().addNew(model: TaskModel(bookName: data.bookName, chapterName: '1', notes: 'Dummy notes', createdDate: 'date', readStatus: true, id: data.id));
 //                                 }, value:data.readStatus,
 //                               ),
 //                             ),),
-// 
+//
 //                             Expanded(
 //                               flex: 5,
 //                               child: Row(
@@ -194,18 +196,18 @@ class BookCard extends StatelessWidget {
 //                                     child: FittedBox(
 //                                       child: Text(
 //                                         data.bookName, style: GoogleFonts.poppins(
-// 
+//
 //                                       ),),
 //                                     ),
 //                                   ),),
-//                                   
+//
 //                                   Expanded(child: Center(child: Text(data.chapterName?? '0',style: GoogleFonts.poppins(),)),),
-// 
+//
 //                                   Expanded(child: Icon(Icons.arrow_forward_ios))
 //                                 ],
 //                               ),),
-// 
-// 
+//
+//
 //                           ],
 //                         ),
 //                       );
@@ -213,7 +215,7 @@ class BookCard extends StatelessWidget {
 //               )
 //             ],
 //           );
-// 
+//
 //         }else{
 //           return Center(child: CircularProgressIndicator(),);
 //         }
