@@ -11,6 +11,7 @@ import 'Controllers/Cubits/add_new_book_cubit/add_new_book_cubit.dart';
 import 'Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
+import 'Controllers/Cubits/default_book_cubit/default_book_cubit.dart';
 import 'Views/authentication_screen/login_screen/login_screen.dart';
 import 'Views/bottom_navigation_screens/bottom_navigation_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => BottomNavigationCubit(0)),
         BlocProvider(create: (context) => AuthenticationCubit()),
+        BlocProvider(create: (context) => DefaultBookCubit()),
         BlocProvider(create: (context) => BibleTaskCubit()),
         BlocProvider(create: (context) => BibleBooksCubit()),
         BlocProvider(create: (context) => ChapterCubit()),

@@ -11,6 +11,8 @@ class ChapterTaskRepo{
 
   static var bookId = '';
   static var bookName = '';
+  static var isPredefinedBook = false;
+  static var isList = false;
   // static var user  = FirebaseAuth.instance.currentUser;
 
   static var chapterRef = FirebaseFirestore.instance.collection('Chapter').doc(FirebaseAuth.instance.currentUser!.uid);

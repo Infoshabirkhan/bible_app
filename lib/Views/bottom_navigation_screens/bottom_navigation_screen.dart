@@ -1,4 +1,5 @@
 import 'package:bible_app/Controllers/Cubits/bottom_navigaiton_cubit.dart';
+import 'package:bible_app/Controllers/Cubits/default_book_cubit/default_book_cubit.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/profile_screen/profile_screen.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/progress_report_screen/progress_report_screen.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/sort_order_screen/sort_order_screen.dart';
@@ -21,6 +22,12 @@ class BottomNavigationScreen extends StatefulWidget {
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   PageController pageController = PageController();
 
+  @override
+  void initState() {
+    context.read<DefaultBookCubit>().getBook();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

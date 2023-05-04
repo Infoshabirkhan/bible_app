@@ -11,6 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../Models/shared_pref.dart';
+
 class NotesScreen extends StatefulWidget {
   final int notesIndex;
   final TaskModel model;
@@ -31,8 +33,38 @@ class _NotesScreenState extends State<NotesScreen> {
 
   final formKey = GlobalKey<FormState>();
 
+
+  var ref=BibleTaskRepo. preDefineRef.doc('hjhj');
+
+  var book ;
+  getRef()async{
+    await   SharedPrefs.getDefaultBook();
+    var book =   await SharedPrefs.getDefaultBook();
+
+    if(book!.bookId =='bible'){
+      setState(() {
+        ref = BibleTaskRepo. preDefineRef.doc(widget.model.documentId);
+
+      });
+
+    }else{
+
+      setState(() {
+        ref = BibleTaskRepo.newBookRef
+            .doc(widget.model.documentId);
+      });
+
+    }
+  }
   List listOfNotes = [];
 
+  @override
+  void initState() {
+
+    getRef();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,8 +133,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
                        print('==========readjson ${readJson}');
                         try {
-                          await BibleTaskRepo.taskRef
-                              .doc(widget.model.documentId)
+                          await ref
                               .update({"read_chapters": readJson});
                         } on Exception catch (e) {
                           print('========== execption ${e.toString()}');
@@ -123,7 +154,7 @@ class _NotesScreenState extends State<NotesScreen> {
         child: const Icon(Icons.add),
       ),
       body: StreamBuilder(
-        stream: BibleTaskRepo.taskRef.doc(widget.model.documentId).snapshots(),
+        stream: ref.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData && !snapshot.hasError) {
             if (snapshot.data != null) {
@@ -231,9 +262,7 @@ class _NotesScreenState extends State<NotesScreen> {
                                                     readJson[widget.notesIndex]
                                                         ['notes'] = list;
 
-                                                    await BibleTaskRepo.taskRef
-                                                        .doc(widget
-                                                            .model.documentId)
+                                                    await ref
                                                         .update({
                                                       "read_chapters": readJson
                                                     });

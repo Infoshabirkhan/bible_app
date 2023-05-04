@@ -1,4 +1,5 @@
 import 'package:bible_app/Models/Repo/bible_task_repo.dart';
+import 'package:bible_app/Models/shared_pref.dart';
 import 'package:bloc/bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
@@ -29,8 +30,21 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
     // }
 
 
-    var list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
- //  var list = await BibleTaskRepo.getNewBooks();
+
+
+
+  var book =   await SharedPrefs.getDefaultBook();
+
+  print('=============== ${book!.bookId},${book.bookName}  ');
+    List<TaskModel>? list = [];
+  if(book!.bookId =='bible'){
+      list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
+
+  }else{
+     TaskModel data = await BibleTaskRepo.getNewBooks();
+
+     list.add(data);
+  }
 
 
 

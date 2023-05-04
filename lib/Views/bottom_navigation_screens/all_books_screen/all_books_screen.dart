@@ -1,6 +1,8 @@
 import 'package:bible_app/Controllers/Cubits/add_new_book_cubit/add_new_book_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
+import 'package:bible_app/Controllers/Cubits/default_book_cubit/default_book_cubit.dart';
 import 'package:bible_app/Models/Repo/add_new_book_repo.dart';
+import 'package:bible_app/Models/models/default_book_model.dart';
 import 'package:bible_app/Views/Widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,7 +123,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
       ),
       body: BlocListener<AddNewBookCubit, AddNewBookState>(
         listener: (context, state) {
-          if(state is AddNewBookDone){
+          if (state is AddNewBookDone) {
             context.read<AddNewBookCubit>().getBook();
           }
           // TODO: implement listener
@@ -136,7 +138,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                     height: 20.sp,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       ChapterTaskRepo.bookName = 'The Holy Bible';
                       ChapterTaskRepo.bookId = 'bible';
                       widget.pageController.jumpToPage(1);
@@ -153,7 +155,9 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                                 color: Colors.grey[700] ?? Colors.grey)),
                         padding: EdgeInsets.symmetric(
                             vertical: 10.sp, horizontal: 5.sp),
-                        child: Row(
+                        child: BlocBuilder<DefaultBookCubit, DefaultBookModel?>(
+  builder: (context, defaultBook) {
+    return Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -161,8 +165,18 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                                 style: GoogleFonts.raleway(fontSize: 20.sp),
                               ),
                             ),
+                            Expanded(child: Align(
+
+                                alignment: Alignment.centerRight,
+
+                                child: Text(defaultBook!.bookId == 'bible' ? 'Default':'',style: TextStyle(
+                                  color: Colors.red
+                                ),)))
+
                           ],
-                        )),
+                        );
+  },
+)),
                   ),
                   ListView.builder(
                       shrinkWrap: true,
@@ -171,9 +185,11 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: (){
-                            ChapterTaskRepo.bookId = state.list[index].documentId;
-                            ChapterTaskRepo.bookName = state.list[index].bookName;
+                          onTap: () {
+                            ChapterTaskRepo.bookId =
+                                state.list[index].documentId;
+                            ChapterTaskRepo.bookName =
+                                state.list[index].bookName;
 
                             widget.pageController.jumpToPage(1);
 
@@ -195,17 +211,29 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                               padding:
                               EdgeInsets.symmetric(
                                   vertical: 10.sp, horizontal: 5.sp),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
+                              child: BlocBuilder<DefaultBookCubit, DefaultBookModel?>(
+                                builder: (context, defaultBook) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
 
-                                      state.list[index].bookName,
-                                      style: GoogleFonts.raleway(fontSize: 20.sp),
-                                    ),
-                                  ),
-                                ],
+                                          state.list[index].bookName,
+                                          style: GoogleFonts.raleway(
+                                              fontSize: 20.sp),
+                                        ),
+                                      ),
+
+                                      Expanded(child: Align(
+
+                                          alignment: Alignment.centerRight,
+                                          child: Text(defaultBook!.bookId == state.list[index].documentId ? 'Default':'',style: TextStyle(
+                                            color: Colors.red
+                                          ),)))
+                                    ],
+                                  );
+                                },
                               )),
                         );
                       }),
