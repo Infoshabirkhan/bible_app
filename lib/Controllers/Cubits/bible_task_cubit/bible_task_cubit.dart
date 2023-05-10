@@ -37,7 +37,7 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 
   print('=============== ${book!.bookId},${book.bookName}  ');
     List<TaskModel>? list = [];
-  if(book!.bookId =='bible'){
+  if(book.bookId =='bible'){
       list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
 
   }else{

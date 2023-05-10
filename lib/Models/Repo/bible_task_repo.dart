@@ -153,11 +153,9 @@ await     ref.add({
 
     var ref;
     if(book!.bookId =='bible'){
-      ref = await preDefineRef
-          .get();
+      ref = await preDefineRef;
     }else{
-      ref = await newBookRef
-          .get();
+      ref = await newBookRef;
     }
     await   ref.doc(model.documentId).update(TaskModel.toJson(model));
 

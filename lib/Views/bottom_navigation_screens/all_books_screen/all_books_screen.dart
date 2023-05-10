@@ -52,14 +52,16 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                     primary: false,
                     padding: EdgeInsets.symmetric(horizontal: 10.sp),
                     children: [
-                      SizedBox(height: 20.sp,),
-
+                      SizedBox(
+                        height: 20.sp,
+                      ),
                       Text('Book name'),
                       MyTextField(
                           controller: bookController,
                           hintText: 'Enter book name'),
-
-                      SizedBox(height: 10.sp,),
+                      SizedBox(
+                        height: 10.sp,
+                      ),
                       Text('Chapters'),
                       MyTextField(
                           keyboardType: TextInputType.number,
@@ -68,15 +70,15 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                           ],
                           controller: chapters,
                           hintText: 'Enter book name'),
-
-                      SizedBox(height: 10.sp,),
+                      SizedBox(
+                        height: 10.sp,
+                      ),
                       ElevatedButton(
                         onPressed: () async {
                           AddNewBookRepo.book['book_name'] =
                               bookController.text.trim();
                           var chapter = int.parse(chapters.text);
-                          AddNewBookRepo.book['total_chapters'] =
-                              chapter;
+                          AddNewBookRepo.book['total_chapters'] = chapter;
 
                           for (var i = 0; i < chapter; i++) {
                             AddNewBookRepo.readChapters.add({
@@ -86,7 +88,6 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                           }
                           AddNewBookRepo.book['read_chapters'] =
                               AddNewBookRepo.readChapters;
-
 
                           await context.read<AddNewBookCubit>().addBook();
 
@@ -104,15 +105,17 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                           builder: (context, state) {
                             if (state is AddNewBookLoading) {
                               return Center(
-                                child: CircularProgressIndicator(),);
+                                child: CircularProgressIndicator(),
+                              );
                             } else {
                               return Text('Submit');
                             }
                           },
                         ),
                       ),
-                      SizedBox(height: 10.sp,),
-
+                      SizedBox(
+                        height: 10.sp,
+                      ),
                     ],
                   ),
                 );
@@ -146,37 +149,56 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                     child: Container(
                         margin: EdgeInsets.only(bottom: 10.sp),
                         decoration: BoxDecoration(
-                          // color: Colors.black,
-                          //    boxShadow: [
-                          //
-                          //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
-                          // ],
+                            // color: Colors.black,
+                            //    boxShadow: [
+                            //
+                            //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
+                            // ],
                             border: Border.all(
                                 color: Colors.grey[700] ?? Colors.grey)),
                         padding: EdgeInsets.symmetric(
                             vertical: 10.sp, horizontal: 5.sp),
                         child: BlocBuilder<DefaultBookCubit, DefaultBookModel?>(
-  builder: (context, defaultBook) {
-    return Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'The Holy Bible',
-                                style: GoogleFonts.raleway(fontSize: 20.sp),
-                              ),
-                            ),
-                            Expanded(child: Align(
+                          builder: (context, defaultBook) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'The Holy Bible',
+                                    style: GoogleFonts.raleway(fontSize: 20.sp),
+                                  ),
+                                ),
+                                // Expanded(
+                                //   child: Align(
+                                //     alignment: Alignment.centerRight,
+                                //     child: Text(
+                                //       defaultBook!.bookId == 'bible'
+                                //           ? 'Default'
+                                //           : '',
+                                //       style: TextStyle(color: Colors.red),
+                                //     ),
+                                //   ),
+                                // ),
 
-                                alignment: Alignment.centerRight,
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: defaultBook!.bookId == 'bible'
+                                        ? Container(
+                                      height: 25.sp,
 
-                                child: Text(defaultBook!.bookId == 'bible' ? 'Default':'',style: TextStyle(
-                                  color: Colors.red
-                                ),)))
-
-                          ],
-                        );
-  },
-)),
+                                      child: Image.asset(
+                                              'assets/images/check.png',
+                                              color: Colors.red,
+                                            ),
+                                        )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        )),
                   ),
                   ListView.builder(
                       shrinkWrap: true,
@@ -193,44 +215,62 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
 
                             widget.pageController.jumpToPage(1);
 
-
                             // print("===================${state.list[index].documentId} ");
-
                           },
                           child: Container(
+
                               margin: EdgeInsets.only(bottom: 10.sp),
                               decoration: BoxDecoration(
-                                // color: Colors.black,
-                                //    boxShadow: [
-                                //
-                                //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
-                                // ],
-                                  border:
-                                  Border.all(color: Colors.grey[700] ??
-                                      Colors.grey)),
-                              padding:
-                              EdgeInsets.symmetric(
+                                  // color: Colors.black,
+                                  //    boxShadow: [
+                                  //
+                                  //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
+                                  // ],
+                                  border: Border.all(
+                                      color: Colors.grey[700] ?? Colors.grey)),
+                              padding: EdgeInsets.symmetric(
                                   vertical: 10.sp, horizontal: 5.sp),
-                              child: BlocBuilder<DefaultBookCubit, DefaultBookModel?>(
+                              child: BlocBuilder<DefaultBookCubit,
+                                  DefaultBookModel?>(
                                 builder: (context, defaultBook) {
                                   return Row(
                                     children: [
                                       Expanded(
                                         flex: 2,
                                         child: Text(
-
                                           state.list[index].bookName,
                                           style: GoogleFonts.raleway(
                                               fontSize: 20.sp),
                                         ),
                                       ),
+                                      // Expanded(
+                                      //     child: Align(
+                                      //         alignment: Alignment.centerRight,
+                                      //         child: Text(
+                                      //           defaultBook!.bookId ==
+                                      //                   state.list[index]
+                                      //                       .documentId
+                                      //               ? 'Default'
+                                      //               : '',
+                                      //           style: TextStyle(
+                                      //               color: Colors.red),
+                                      //         )))
 
-                                      Expanded(child: Align(
-
+                                      Expanded(
+                                        child: Align(
                                           alignment: Alignment.centerRight,
-                                          child: Text(defaultBook!.bookId == state.list[index].documentId ? 'Default':'',style: TextStyle(
-                                            color: Colors.red
-                                          ),)))
+                                          child: defaultBook!.bookId ==
+                                                  state.list[index].documentId
+                                              ? Container(
+                                            height: 25.sp,
+                                                child: Image.asset(
+                                                    'assets/images/check.png',
+                                                    color: Colors.red,
+                                                  ),
+                                              )
+                                              : SizedBox(),
+                                        ),
+                                      )
                                     ],
                                   );
                                 },
@@ -240,9 +280,13 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                 ],
               );
             } else if (state is AddNewBookLoading) {
-              return Center(child: CircularProgressIndicator(),);
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             } else if (state is AddNewBookError) {
-              return Center(child: Text(state.error),);
+              return Center(
+                child: Text(state.error),
+              );
             } else {
               return Container();
             }

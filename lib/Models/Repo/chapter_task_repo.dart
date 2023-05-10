@@ -1,5 +1,6 @@
 
 
+import 'package:bible_app/Models/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,7 +41,8 @@ class ChapterTaskRepo{
 
       }
 
-      await chapterRef.collection('books').doc('bible').update({
+      var book =await  SharedPrefs.getDefaultBook();
+      await chapterRef.collection('books').doc(book!.bookId).update({
 
         // "total_chapter" : ChapterModel.model.totalChapters,
          "completed_chapters" : ChapterModel.model.completedChapters
