@@ -106,6 +106,14 @@ class AuthenticationRepo {
       if (userCredential.user != null && userCredential.user!.emailVerified) {
         print('==================== in if condition');
 
+        await SharedPrefs.setDefaultBook(
+          DefaultBookModel(
+            bookId: 'bible',
+            bookName: 'The Holy Bible',
+            isPreDefined: true,
+            isList: true,
+          ),
+        );
         return true;
       } else if (!userCredential.user!.emailVerified) {
         Fluttertoast.showToast(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bible_app/Models/Repo/bible_task_repo.dart';
 import 'package:bible_app/Models/shared_pref.dart';
 import 'package:bloc/bloc.dart';
@@ -13,64 +15,126 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
   BibleTaskCubit() : super(BibleTaskInitial());
 
 
+  StreamSubscription? firebaseStream;
 
   getTaskInfo({bool? isSortAscending = false})async{
-
-
     emit(BibleTaskLoading());
-
-    // if(await InternetConnectivity.isNotConnected()){
-    //
-    //   await Future.delayed(const Duration(seconds: 1));
-    //
-    //   emit(BibleTaskNoInternet());
-    //
-    //
-    //   return;
-    // }
-
-
-
-
-
   var book =   await SharedPrefs.getDefaultBook();
-
-  print('=============== ${book!.bookId},${book.bookName}  ');
-    List<TaskModel>? list = [];
-  if(book.bookId =='bible'){
-      list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
-
+    if(book!.bookId =='bible'){
+      getDefaultBook(isSortAscending: isSortAscending);
   }else{
-     TaskModel data = await BibleTaskRepo.getNewBooks();
-
-     list.add(data);
+      getNewBook();
+     }
   }
 
 
 
-    if(list !=null){
-      emit(BibleTaskLoaded(model:  list));
-      }
+  /// function will get default book
+  getDefaultBook({bool? isSortAscending = false})async{
+  try {
+    Stream<List<TaskModel>>? list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
+    if(list != null){
+      firebaseStream = list.listen((data) {
+
+
+        if(data.isNotEmpty){
+          if(isSortAscending!){
+                data.sort((a,b)=> a.totalChapters.compareTo(b.totalChapters));
+
+              }else{
+            data.sort((a,b)=> a.id.compareTo(b.id));
+
+              }
+          emit(BibleTaskLoaded( model: data));
+
+        }else{
+          emit(BibleTaskLoaded( model: []));
+        }
+      });
+    }
+  } on Exception catch (e) {
+    emit(BibleTaskError());
+    // TODO
+  }
+}
+
+  /// function will only get user added book
+  getNewBook()async{
+    try {
+      Stream<TaskModel> data  = await BibleTaskRepo.getNewBooks();
+         firebaseStream = data.listen((data) {
+       emit(BibleTaskLoaded(model: [data]));
+         });
+    } on Exception catch (e) {
+      emit(BibleTaskError());
+      // TODO
+    }
+
+
+
+
 
 
   }
-
 
   addNew({required TaskModel model}) async {
-    emit(BibleTaskAddingEntry());
+ //   emit(BibleTaskAddingEntry());
 
 await     BibleTaskRepo.addNew(model: model);
-emit(BibleTaskDataAdded());
+//emit(BibleTaskDataAdded());
 
   }
 
 
   update({required TaskModel model}) async {
-    emit(BibleTaskLoading());
+   // emit(BibleTaskLoading());
 
     await     BibleTaskRepo.update(model: model);
 
-    emit( BibleTaskDataAdded());
+   // emit( BibleTaskDataAdded());
 
   }
 }
+
+
+
+//  getTaskInfo({bool? isSortAscending = false})async{
+//
+//
+//     emit(BibleTaskLoading());
+//
+//     // if(await InternetConnectivity.isNotConnected()){
+//     //
+//     //   await Future.delayed(const Duration(seconds: 1));
+//     //
+//     //   emit(BibleTaskNoInternet());
+//     //
+//     //
+//     //   return;
+//     // }
+//
+//
+//
+//
+//
+//   var book =   await SharedPrefs.getDefaultBook();
+//
+//   print('=============== ${book!.bookId},${book.bookName}  ');
+//     List<TaskModel>? list = [];
+//   if(book.bookId =='bible'){
+//       list = await BibleTaskRepo.getTask(isSortAscending: isSortAscending);
+//
+//   }else{
+//      TaskModel data = await BibleTaskRepo.getNewBooks();
+//
+//      list.add(data);
+//   }
+//
+//
+//
+//     if(list !=null){
+//       emit(BibleTaskLoaded(model:  list));
+//       }
+//
+//
+//   }

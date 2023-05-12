@@ -69,7 +69,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           controller: chapters,
-                          hintText: 'Enter book name'),
+                          hintText: 'Enter number of chapters'),
                       SizedBox(
                         height: 10.sp,
                       ),
