@@ -145,10 +145,14 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                                   //       fontSize: 30.sp
                                   //   ),);
                                   return Text(
-                                    ((ChapterModel.model.readBooks /
-                                                ChapterModel.model.totalBooks) *
-                                            100)
-                                        .toStringAsFixed(2),
+                                    '${((ChapterModel.model.readBooks /
+                                                    ChapterModel.model.totalBooks) *
+                                                100)
+                                            .toStringAsFixed(2)}',
+                                    // ((ChapterModel.model.readBooks /
+                                    //             ChapterModel.model.totalBooks) *
+                                    //         100)
+                                    //     .toStringAsFixed(2),
                                     style: GoogleFonts.poppins(
                                         color: Colors.green, fontSize: 30.sp),
                                   );
@@ -222,7 +226,9 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
+                                print('============${ChapterTaskRepo.bookId}');
                                 await SharedPrefs.setDefaultBook(
+
                                   DefaultBookModel(
                                     bookId: ChapterTaskRepo.bookId,
                                     bookName: ChapterTaskRepo.bookName,

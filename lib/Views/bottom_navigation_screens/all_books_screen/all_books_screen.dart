@@ -2,6 +2,7 @@ import 'package:bible_app/Controllers/Cubits/add_new_book_cubit/add_new_book_cub
 import 'package:bible_app/Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/default_book_cubit/default_book_cubit.dart';
 import 'package:bible_app/Models/Repo/add_new_book_repo.dart';
+import 'package:bible_app/Models/Repo/user_book_repo.dart';
 import 'package:bible_app/Models/models/default_book_model.dart';
 import 'package:bible_app/Views/Widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,6 @@ class AllBooksScreen extends StatefulWidget {
 }
 
 class _AllBooksScreenState extends State<AllBooksScreen> {
-  TextEditingController bookController = TextEditingController();
-  TextEditingController chapters = TextEditingController();
 
   @override
   void initState() {
@@ -42,83 +41,11 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+
           showDialog(
               context: context,
               builder: (context) {
-                return Dialog(
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    primary: false,
-                    padding: EdgeInsets.symmetric(horizontal: 10.sp),
-                    children: [
-                      SizedBox(
-                        height: 20.sp,
-                      ),
-                      Text('Book name'),
-                      MyTextField(
-                          controller: bookController,
-                          hintText: 'Enter book name'),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      Text('Chapters'),
-                      MyTextField(
-                          keyboardType: TextInputType.number,
-                          inputFormatter: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          controller: chapters,
-                          hintText: 'Enter number of chapters'),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          AddNewBookRepo.book['book_name'] =
-                              bookController.text.trim();
-                          var chapter = int.parse(chapters.text);
-                          AddNewBookRepo.book['total_chapters'] = chapter;
-
-                          for (var i = 0; i < chapter; i++) {
-                            AddNewBookRepo.readChapters.add({
-                              "status": false,
-                              "notes": [],
-                            });
-                          }
-                          AddNewBookRepo.book['read_chapters'] =
-                              AddNewBookRepo.readChapters;
-
-                          await context.read<AddNewBookCubit>().addBook();
-
-                          Navigator.of(context).pop();
-                          // context.read<BookListCubit>().getLength(index: int
-                          //     .parse(chapters.text),);
-                          // Navigator.of(context).pop();
-                          // Navigator.of(context)
-                          //     .push(MaterialPageRoute(builder: (context) {
-                          //   return AddNewBook(books: bookController.text,
-                          //     chapters: int.parse(chapters.text),);
-                          // }));
-                        },
-                        child: BlocBuilder<AddNewBookCubit, AddNewBookState>(
-                          builder: (context, state) {
-                            if (state is AddNewBookLoading) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              return Text('Submit');
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                    ],
-                  ),
-                );
+                return AddBookDailog();
               });
         },
         label: Text('Add Book'),
@@ -206,75 +133,78 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                       itemCount: state.list.length,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            ChapterTaskRepo.bookId =
-                                state.list[index].documentId;
-                            ChapterTaskRepo.bookName =
-                                state.list[index].bookName;
+                        return Visibility(
+                         visible:   state.list[index].documentId != 'bible',
+                          child: InkWell(
+                            onTap: () {
+                              ChapterTaskRepo.bookId =
+                                  state.list[index].documentId;
+                              ChapterTaskRepo.bookName =
+                                  state.list[index].bookName;
 
-                            widget.pageController.jumpToPage(1);
+                              widget.pageController.jumpToPage(1);
 
-                            // print("===================${state.list[index].documentId} ");
-                          },
-                          child: Container(
+                              // print("===================${state.list[index].documentId} ");
+                            },
+                            child: Container(
 
-                              margin: EdgeInsets.only(bottom: 10.sp),
-                              decoration: BoxDecoration(
-                                  // color: Colors.black,
-                                  //    boxShadow: [
-                                  //
-                                  //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
-                                  // ],
-                                  border: Border.all(
-                                      color: Colors.grey[700] ?? Colors.grey)),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.sp, horizontal: 5.sp),
-                              child: BlocBuilder<DefaultBookCubit,
-                                  DefaultBookModel?>(
-                                builder: (context, defaultBook) {
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(
-                                          state.list[index].bookName,
-                                          style: GoogleFonts.raleway(
-                                              fontSize: 20.sp),
+                                margin: EdgeInsets.only(bottom: 10.sp),
+                                decoration: BoxDecoration(
+                                    // color: Colors.black,
+                                    //    boxShadow: [
+                                    //
+                                    //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
+                                    // ],
+                                    border: Border.all(
+                                        color: Colors.grey[700] ?? Colors.grey)),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.sp, horizontal: 5.sp),
+                                child: BlocBuilder<DefaultBookCubit,
+                                    DefaultBookModel?>(
+                                  builder: (context, defaultBook) {
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            state.list[index].bookName,
+                                            style: GoogleFonts.raleway(
+                                                fontSize: 20.sp),
+                                          ),
                                         ),
-                                      ),
-                                      // Expanded(
-                                      //     child: Align(
-                                      //         alignment: Alignment.centerRight,
-                                      //         child: Text(
-                                      //           defaultBook!.bookId ==
-                                      //                   state.list[index]
-                                      //                       .documentId
-                                      //               ? 'Default'
-                                      //               : '',
-                                      //           style: TextStyle(
-                                      //               color: Colors.red),
-                                      //         )))
+                                        // Expanded(
+                                        //     child: Align(
+                                        //         alignment: Alignment.centerRight,
+                                        //         child: Text(
+                                        //           defaultBook!.bookId ==
+                                        //                   state.list[index]
+                                        //                       .documentId
+                                        //               ? 'Default'
+                                        //               : '',
+                                        //           style: TextStyle(
+                                        //               color: Colors.red),
+                                        //         )))
 
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: defaultBook!.bookId ==
-                                                  state.list[index].documentId
-                                              ? Container(
-                                            height: 25.sp,
-                                                child: Image.asset(
-                                                    'assets/images/check.png',
-                                                    color: Colors.red,
-                                                  ),
-                                              )
-                                              : SizedBox(),
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                },
-                              )),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: defaultBook!.bookId ==
+                                                    state.list[index].documentId
+                                                ? Container(
+                                              height: 25.sp,
+                                                  child: Image.asset(
+                                                      'assets/images/check.png',
+                                                      color: Colors.red,
+                                                    ),
+                                                )
+                                                : SizedBox(),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                )),
+                          ),
                         );
                       }),
                 ],
@@ -288,11 +218,109 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                 child: Text(state.error),
               );
             } else {
-              return Container();
+              return Container(
+
+              );
             }
           },
         ),
       ),
     );
+  }
+}
+
+
+class AddBookDailog extends StatefulWidget {
+  const AddBookDailog({Key? key}) : super(key: key);
+
+  @override
+  State<AddBookDailog> createState() => _AddBookDailogState();
+}
+
+class _AddBookDailogState extends State<AddBookDailog> {
+  TextEditingController bookController = TextEditingController();
+  TextEditingController chapters = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return                  Dialog(
+      child: Form(
+        key: formKey,
+        child: ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          primary: false,
+          padding: EdgeInsets.symmetric(horizontal: 10.sp),
+          children: [
+            SizedBox(
+              height: 20.sp,
+            ),
+            Text('Book name'),
+            MyTextField(
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return 'Book name is required';
+                  }else{
+                    return null;
+                  }
+                },
+                controller: bookController,
+                hintText: 'Enter book name'),
+            SizedBox(
+              height: 10.sp,
+            ),
+            Text('Number of Sub Books'),
+            MyTextField(
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return 'Sub book is required';
+                  }else{
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.number,
+                inputFormatter: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                controller: chapters,
+                hintText: 'Enter number of sub books'),
+            SizedBox(
+              height: 10.sp,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+
+                if(formKey.currentState!.validate()){
+                  AddNewBookRepo.book['book_name'] =
+                      bookController.text.trim();
+                  var chapter = int.parse(chapters.text);
+                  AddNewBookRepo.book['total_chapters'] = chapter;
+
+                  List<TextEditingController>  list = [];
+                  Navigator.of(context).pop();
+                  for(var i = 0; i<int
+                      .parse(chapters.text); i++ ){
+                    list.add(TextEditingController());
+                  }
+                  context.read<BookListCubit>().getLength(index: list,);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return AddNewBook(books: bookController.text,
+                      chapters: int.parse(chapters.text),);
+                  }));
+
+                }
+              },
+              child: Text('Submit'),
+            ),
+            SizedBox(
+              height: 10.sp,
+            ),
+          ],
+        ),
+      ),
+    );
+
   }
 }

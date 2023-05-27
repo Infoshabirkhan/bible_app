@@ -5,6 +5,7 @@ import 'package:bible_app/Models/Repo/bible_task_repo.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:bible_app/Views/Widgets/my_banner_ad_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +41,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
  }else{
 
    setState(() {
-     ref = BibleTaskRepo.newBookRef
+     ref = BibleTaskRepo.newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
+         .collection('books')
          .doc(widget.model.documentId);
 
    });

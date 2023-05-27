@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:bible_app/Models/Repo/add_new_book_repo.dart';
+import 'package:bible_app/Models/Repo/user_book_repo.dart';
 import 'package:bible_app/Models/models/book_model.dart';
+import 'package:bible_app/Models/models/chapter_model.dart';
 import 'package:bible_app/Models/models/task_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,7 +19,8 @@ class AddNewBookCubit extends Cubit<AddNewBookState> {
 
     emit(AddNewBookLoading());
     try {
-      var response = await AddNewBookRepo.addNewBook();
+      var response = await UserBookRepo.addNewBook();
+   await   Future.delayed(Duration(milliseconds: 500));
       if(response == true){
         emit(AddNewBookDone());
       }else{
@@ -36,7 +39,7 @@ class AddNewBookCubit extends Cubit<AddNewBookState> {
 
     emit(AddNewBookLoading());
     try {
-      Stream<List<TaskModel>>? response = await AddNewBookRepo.getBooks();
+      Stream<List<ChapterModel>>? response = await AddNewBookRepo.getBooks();
 
       if(response != null){
 

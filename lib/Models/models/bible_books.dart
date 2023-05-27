@@ -25,8 +25,8 @@ class BibleBooksModel {
   factory BibleBooksModel.fromJson(Map<String, dynamic> json) => BibleBooksModel(
     id: json["id"],
     name: json["name"],
-    testament: json["testament"],
-    genre: Genre.fromJson(json["genre"]),
+    testament: json["testament"] ?? '',
+    genre: Genre.fromJson(json["genre"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,8 +47,8 @@ class Genre {
   final String name;
 
   factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-    id: json["id"],
-    name: json["name"],
+    id: json["id"] ?? 0,
+    name: json["name"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

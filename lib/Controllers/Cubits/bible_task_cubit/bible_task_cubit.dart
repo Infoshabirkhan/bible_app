@@ -23,7 +23,7 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
     if(book!.bookId =='bible'){
       getDefaultBook(isSortAscending: isSortAscending);
   }else{
-      getNewBook();
+      getNewBook(isSortAscending: isSortAscending);
      }
   }
 
@@ -59,12 +59,28 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 }
 
   /// function will only get user added book
-  getNewBook()async{
+  getNewBook({bool? isSortAscending = false})async{
     try {
-      Stream<TaskModel> data  = await BibleTaskRepo.getNewBooks();
-         firebaseStream = data.listen((data) {
-       emit(BibleTaskLoaded(model: [data]));
-         });
+      Stream<List<TaskModel>>? list  = await BibleTaskRepo.getNewBooks();
+      if(list != null){
+
+        print('here is comppig');
+        firebaseStream = list.listen((myData) {
+
+          if(isSortAscending!){
+            myData.sort((a,b)=> a.totalChapters.compareTo(b.totalChapters));
+
+          }else{
+            myData.sort((a,b)=> a.id.compareTo(b.id));
+
+          }
+          emit(BibleTaskLoaded(model: myData));
+        });
+      }else{
+        emit(BibleTaskLoaded(model: []));
+
+      }
+
     } on Exception catch (e) {
       emit(BibleTaskError());
       // TODO

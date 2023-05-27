@@ -6,6 +6,7 @@ import 'package:bible_app/Models/utils/internet_connectivity.dart';
 import 'package:bible_app/Views/Widgets/logout_alert_dialog.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/book_list_screen/add_notes_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,7 +51,8 @@ class _NotesScreenState extends State<NotesScreen> {
     }else{
 
       setState(() {
-        ref = BibleTaskRepo.newBookRef
+        ref = BibleTaskRepo.newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('books')
             .doc(widget.model.documentId);
       });
 

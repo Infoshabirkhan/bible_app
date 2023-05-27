@@ -16,7 +16,7 @@ class ChapterTaskRepo{
   static var isList = false;
   // static var user  = FirebaseAuth.instance.currentUser;
 
-  static var chapterRef = FirebaseFirestore.instance.collection('Chapter').doc(FirebaseAuth.instance.currentUser!.uid);
+  static var chapterRef = FirebaseFirestore.instance.collection('Chapter');
 
  static  Future <bool> setChapter({required bool isIncrement })async{
 
@@ -42,7 +42,7 @@ class ChapterTaskRepo{
       }
 
       var book =await  SharedPrefs.getDefaultBook();
-      await chapterRef.collection('books').doc(book!.bookId).update({
+      await chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books').doc(book!.bookId).update({
 
         // "total_chapter" : ChapterModel.model.totalChapters,
          "completed_chapters" : ChapterModel.model.completedChapters
@@ -67,16 +67,18 @@ class ChapterTaskRepo{
 
   static Future <bool> getChapter()async{
    print('=========== Firebase id ${FirebaseAuth.instance.currentUser!.uid}');
-   ChapterModel.model = ChapterModel(completedChapters: 0, readBooks: 0,totalBooks: 0, totalChapters: 0, );
+   ChapterModel.model = ChapterModel(documentId: '',completedChapters: 0, readBooks: 0,totalBooks: 0, totalChapters: 0, bookName: '', );
    try {
-     var ref = await chapterRef.collection('books').doc(bookId).get();
+     var ref = await chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books').doc(bookId).get();
 
      if(ref.exists){
-       ChapterModel.model = ChapterModel.fromJson(ref);
+       ChapterModel.model = ChapterModel.fromJson(ref,ref.id);
+
 
        return true;
      }else{
-       ChapterModel.model = ChapterModel(completedChapters: 0, readBooks: 0,totalBooks: 0, totalChapters: 0, );
+
+       ChapterModel.model = ChapterModel(documentId: '',completedChapters: 0, readBooks: 0,totalBooks: 0, totalChapters: 0, bookName: '', );
 
        return true;
 

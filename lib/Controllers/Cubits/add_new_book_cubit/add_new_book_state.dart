@@ -6,7 +6,7 @@ abstract class AddNewBookState {}
 class AddNewBookInitial extends AddNewBookState {}
 class AddNewBookLoading extends AddNewBookState {}
 class AddNewBookLoaded extends AddNewBookState {
-  final List<TaskModel> list ;
+  final List<ChapterModel> list ;
 
   AddNewBookLoaded({required this.list});
 }

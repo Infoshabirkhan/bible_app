@@ -20,9 +20,7 @@ class BibleTaskRepo {
       .collection('userTask');
 
   static var newBookRef = FirebaseFirestore.instance
-      .collection('Books')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('books');
+      .collection('user_books');
 
   //
   // static var taskRef = FirebaseFirestore.instance
@@ -44,15 +42,16 @@ class BibleTaskRepo {
 //
 // }
 
-  static Future<Stream<TaskModel>> getNewBooks() async {
+  static Future<Stream<List<TaskModel>>?> getNewBooks() async {
     var book = await SharedPrefs.getDefaultBook();
+    print('============ new book ${book?.bookId}');
 
-    var data = await newBookRef
-        .doc(book!.bookId)
-        .snapshots()
-        .map((event) => TaskModel.fromJson(event.id, event));
+
 // TaskModel model = TaskModel.fromJson(data.id, data);
-    return data;
+    var ref = await newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('books').where('book_id', isEqualTo: book?.bookId).snapshots().map((data) =>
+        data.docs.map((book) => TaskModel.fromJson(book.id, book)).toList());
+    return ref;
   }
 
   static Future<Stream<List<TaskModel>>?> getTask(
@@ -125,7 +124,8 @@ class BibleTaskRepo {
     if (book!.bookId == 'bible') {
       ref = await preDefineRef.get();
     } else {
-      ref = await newBookRef.get();
+      ref = await newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('books').get();
     }
     await ref.add({
       "book_name": model.bookName,
@@ -145,7 +145,8 @@ class BibleTaskRepo {
       if (book!.bookId == 'bible') {
         ref = await preDefineRef;
       } else {
-        ref = await newBookRef;
+        ref = await newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('books');
       }
       await ref.doc(model.documentId).update(TaskModel.toJson(model));
 
@@ -154,8 +155,8 @@ class BibleTaskRepo {
       } else {
         --ChapterModel.model.readBooks;
       }
-      await ChapterTaskRepo.chapterRef
-        ..collection('books')
+      await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('books')
             .doc(book.bookId)
             .update({"read_books": ChapterModel.model.readBooks});
 

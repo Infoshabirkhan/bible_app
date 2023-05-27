@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BibleBooksCubit()),
         BlocProvider(create: (context) => ChapterCubit()),
         BlocProvider(create: (context) => AddNewBookCubit()),
-        BlocProvider(create: (context) => BookListCubit(0)),
+        BlocProvider(create: (context) => BookListCubit([])),
       ],
       child: ScreenUtilInit(
 

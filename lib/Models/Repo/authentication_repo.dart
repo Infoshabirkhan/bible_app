@@ -65,11 +65,12 @@ class AuthenticationRepo {
           print('==================== added $item');
         }
 
-        await ChapterTaskRepo.chapterRef.collection('books').doc("bible").set({
+        await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books').doc("bible").set({
           "total_chapter": 1189,
           "completed_chapters": 0,
           "total_books": 66,
           "read_books": 0,
+          "book_name" : "The Holy bible"
         });
 
         await SharedPrefs.setDefaultBook(

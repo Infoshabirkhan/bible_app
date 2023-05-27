@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '../models/chapter_model.dart';
+
 class AddNewBookRepo {
   static Future<bool> addNewBook() async {
     try {
@@ -25,7 +27,7 @@ class AddNewBookRepo {
 
       //for(var item in subHeadings){
       var doc = await ref.add(book);
-      await ChapterTaskRepo.chapterRef.collection('books')
+      await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books')
         ..doc(doc.id).set({
           "total_chapter": book["total_chapters"],
           "completed_chapters": 0,
@@ -41,19 +43,28 @@ class AddNewBookRepo {
     }
   }
 
-  static Future<Stream<List<TaskModel>>?> getBooks() async {
+  static Future<Stream<List<ChapterModel>>?> getBooks() async {
     var uid = FirebaseAuth.instance.currentUser?.uid;
 
+    print('=========================bible book repo');
     try {
       try {
         var ref = await FirebaseFirestore.instance
-            .collection('Books')
+            .collection('Chapter')
             .doc(uid)
             .collection('books')
             .snapshots()
             .map((data) => data.docs
-                .map((item) => TaskModel.fromJson(item.id, item))
-                .toList());
+            .map((item) => ChapterModel.fromJson(item, item.id))
+            .toList());
+        // var ref = await FirebaseFirestore.instance
+        //     .collection('Books')
+        //     .doc(uid)
+        //     .collection('books')
+        //     .snapshots()
+        //     .map((data) => data.docs
+        //         .map((item) => TaskModel.fromJson(item.id, item))
+        //         .toList());
 
         return ref;
       } on Exception catch (e) {
