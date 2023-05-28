@@ -270,11 +270,11 @@ class _AddBookDailogState extends State<AddBookDailog> {
             SizedBox(
               height: 10.sp,
             ),
-            Text('Number of Sub Books'),
+            Text('Number of Chapters'),
             MyTextField(
                 validator: (value){
                   if(value == null || value.isEmpty){
-                    return 'Sub book is required';
+                    return 'Chapters is required';
                   }else{
                     return null;
                   }
@@ -284,7 +284,7 @@ class _AddBookDailogState extends State<AddBookDailog> {
                   FilteringTextInputFormatter.digitsOnly
                 ],
                 controller: chapters,
-                hintText: 'Enter number of sub books'),
+                hintText: 'Enter number of chapters'),
             SizedBox(
               height: 10.sp,
             ),

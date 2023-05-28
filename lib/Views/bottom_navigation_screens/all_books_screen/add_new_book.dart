@@ -141,7 +141,7 @@ class _AddNewBookState extends State<AddNewBook> {
                                 Row(
                                   children: [
                                     Expanded(child: Text(
-                                      'Name of book',),),
+                                      'Chapter Name',),),
                                     Expanded(
                                       flex: 2,
                                       child: MyTextField(
@@ -153,19 +153,19 @@ class _AddNewBookState extends State<AddNewBook> {
 
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please provide book name';
+                                            return 'Please provide Chapter name';
                                           } else {
                                             return null;
                                           }
                                         },
                                         controller: bookName[index],
-                                        hintText: 'Enter book name',),),
+                                        hintText: 'Enter Chapter name',),),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     Expanded(child: Text(
-                                      'Number of chapters',),),
+                                      'Number of \nSub chapters',),),
                                     Expanded(
                                       flex: 2,
                                       child: MyTextField(
@@ -178,13 +178,13 @@ class _AddNewBookState extends State<AddNewBook> {
 
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please provide number of chapters';
+                                            return 'Please provide number of sub chapters';
                                           } else {
                                             return null;
                                           }
                                         },
                                         controller: chapterLength[index],
-                                        hintText: 'Number of chapters',),),
+                                        hintText: 'Number of sub chapters',),),
                                   ],
                                 )
                               ],
