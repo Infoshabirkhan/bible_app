@@ -7,12 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import '../../../Models/advertisement_id.dart';
 import '../../../Models/models/task_model.dart';
 import 'books_card.dart';
 
 class BookListScreen extends StatefulWidget {
-  const BookListScreen({Key? key}) : super(key: key);
+  final PageController pageController;
+  const BookListScreen({Key? key,required this.pageController,}) : super(key: key);
 
   @override
   State<BookListScreen> createState() => _BookListScreenState();
@@ -40,107 +42,116 @@ class _BookListScreenState extends State<BookListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Traditional'),
-      ),
-     
-      body:      BlocListener<BibleTaskCubit, BibleTaskState>(
-        listener: (context, state) {
+    return WillPopScope(
+      onWillPop: ()async{
 
-    if(state is BibleTaskAddingEntry ){
-    ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Loading')));
-    } if(state is BibleTaskDataAdded ){
-    context.read<BibleTaskCubit>().getTaskInfo();
-    }
-    // TODO: implement listener
-    },
-      child: Column(
-        children: [
-          Expanded(
+        widget.pageController.jumpToPage(0);
+        context.read<BottomNavigationCubit>().getNext(index: 0);
+        return false;
 
-            child: BlocBuilder<BibleTaskCubit, BibleTaskState>(
-              builder: (context, state) {
-                if(state is BibleTaskLoaded){
-                  return Column(
-                    // primary: false,
-                    // physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      Expanded(
-                        child: Container(
-                          child: Row(
-                            children: [
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Traditional'),
+        ),
 
+        body:      BlocListener<BibleTaskCubit, BibleTaskState>(
+          listener: (context, state) {
 
-                              Spacer(),
-                              Expanded(
-                                flex: 5,
-                                child: Row(
-                                  children: [
-                                    Expanded(child:
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: FittedBox(
-                                        child: Text('Books', style: GoogleFonts.poppins(
+      if(state is BibleTaskAddingEntry ){
+      ScaffoldMessenger.of(context)..showSnackBar(SnackBar(content: Text('Loading')));
+      } if(state is BibleTaskDataAdded ){
+      context.read<BibleTaskCubit>().getTaskInfo();
+      }
+      // TODO: implement listener
+      },
+        child: Column(
+          children: [
+            Expanded(
 
-                                        ),),
-                                      ),
-                                    ),),
+              child: BlocBuilder<BibleTaskCubit, BibleTaskState>(
+                builder: (context, state) {
+                  if(state is BibleTaskLoaded){
+                    return Column(
+                      // primary: false,
+                      // physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Expanded(
+                          child: Container(
+                            child: Row(
+                              children: [
 
 
+                                Spacer(),
+                                Expanded(
+                                  flex: 5,
+                                  child: Row(
+                                    children: [
+                                      Expanded(child:
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: FittedBox(
+                                          child: Text('Books', style: GoogleFonts.poppins(
 
-                                    Expanded(child: Center(
-                                      child: FittedBox(
-                                        child: Text('Chapter',style: GoogleFonts.poppins(
-
-
-                                        ),),
-                                      ),
-                                    ),),
-
-                                    const Spacer()
+                                          ),),
+                                        ),
+                                      ),),
 
 
 
-                                  ],
-                                ),),
+                                      Expanded(child: Center(
+                                        child: FittedBox(
+                                          child: Text('Chapter',style: GoogleFonts.poppins(
+
+
+                                          ),),
+                                        ),
+                                      ),),
+
+                                      const Spacer()
 
 
 
-                            ],
+                                    ],
+                                  ),),
+
+
+
+                              ],
+                            ),
                           ),
                         ),
-                      ),
 
 
-                      Expanded(
-                        flex: 9,
-                        child: ListView.builder(
+                        Expanded(
+                          flex: 9,
+                          child: ListView.builder(
 
-                            padding: EdgeInsets.symmetric(horizontal: 5.sp,),
-                            itemCount: state.model.length,
-                            itemBuilder: (context, index) {
-                              var data =  state.model[index];
-                                return BookCard(data: data,);
-                            }),
-                      )
-                    ],
-                  );
+                              padding: EdgeInsets.symmetric(horizontal: 5.sp,),
+                              itemCount: state.model.length,
+                              itemBuilder: (context, index) {
+                                var data =  state.model[index];
+                                  return BookCard(data: data,);
+                              }),
+                        )
+                      ],
+                    );
 
-                }else if(state is BibleTaskNoInternet){
-                  return NoInternetWidget(onRetry: (){
-                    context.read<BibleTaskCubit>().getTaskInfo();
-                  });
-                }else{
-                  return Center(child: CircularProgressIndicator(),);
-                }
-              },
+                  }else if(state is BibleTaskNoInternet){
+                    return NoInternetWidget(onRetry: (){
+                      context.read<BibleTaskCubit>().getTaskInfo();
+                    });
+                  }else{
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                },
+              ),
             ),
-          ),
-          const MyBannerAdWidget()  ,      ],
+            const MyBannerAdWidget()  ,      ],
+        ),
+      )
+        // body:BookList()
       ),
-    )
-      // body:BookList()
     );
   }
 }

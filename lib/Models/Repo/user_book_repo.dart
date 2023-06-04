@@ -30,12 +30,13 @@ class UserBookRepo {
           'id': 0,
           "book_name": listOfBooks[i]['book_name'],
           "completed_chapter" :0,
-          "created_date" :null,
+          "created_date" :Timestamp.now(),
           "notes" :'',
           "read_chapters": listOfBooks[i]['read_chapters'],
           "read_status": false,
           "total_chapters": listOfBooks[i]['total_chapters'],
-          "book_id" : docId.id
+          "book_id" : docId.id,
+
         });
       }
 

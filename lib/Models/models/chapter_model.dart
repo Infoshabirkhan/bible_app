@@ -30,7 +30,7 @@ class ChapterModel {
   factory ChapterModel.fromJson(
       DocumentSnapshot<Map<String, dynamic>> json, String id) {
     return ChapterModel(
-      bookName: 'book name',
+      bookName: json['book_name'],
       totalChapters: json['total_chapter'],
       completedChapters: json['completed_chapters'],
       totalBooks: json['total_books'],

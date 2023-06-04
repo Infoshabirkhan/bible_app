@@ -19,12 +19,12 @@ class BibleTaskCubit extends Cubit<BibleTaskState> {
 
   getTaskInfo({bool? isSortAscending = false})async{
     emit(BibleTaskLoading());
-  var book =   await SharedPrefs.getDefaultBook();
-    if(book!.bookId =='bible'){
-      getDefaultBook(isSortAscending: isSortAscending);
-  }else{
+  // var book =   await SharedPrefs.getDefaultBook();
+  //   if(book!.bookId =='bible'){
+  //     getDefaultBook(isSortAscending: isSortAscending);
+  // }else{
       getNewBook(isSortAscending: isSortAscending);
-     }
+   //  }
   }
 
 

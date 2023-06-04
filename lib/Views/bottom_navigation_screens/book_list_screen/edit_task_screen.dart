@@ -26,19 +26,20 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
 
-  var ref=BibleTaskRepo. preDefineRef.doc('hjj');
+  var ref=BibleTaskRepo. newBookRef.doc('hjj');
+//  var ref=BibleTaskRepo. preDefineRef.doc('hjj');
 
   var book ;
   getRef()async{
   await   SharedPrefs.getDefaultBook();
  var book =   await SharedPrefs.getDefaultBook();
 
- if(book!.bookId =='bible'){
-   setState(() {
-     ref = BibleTaskRepo. preDefineRef.doc(widget.model.documentId);
-
-   });
- }else{
+ // if(book!.bookId =='bible'){
+ //   setState(() {
+ //     ref = BibleTaskRepo. preDefineRef.doc(widget.model.documentId);
+ //
+ //   });
+ // }else{
 
    setState(() {
      ref = BibleTaskRepo.newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
@@ -46,7 +47,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
          .doc(widget.model.documentId);
 
    });
-  }
+ // }
   }
 
 

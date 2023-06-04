@@ -114,6 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Email',
                 style: GoogleFonts.poppins(),
               ),
+              SizedBox(
+                height: 4.sp,
+              ),
               MyTextField(
 
                 validator: (value){
@@ -135,6 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 'Password',
                 style: GoogleFonts.poppins(),
+              ),
+              SizedBox(
+                height: 4.sp,
               ),
               PasswordFields(
                 validator: (value){

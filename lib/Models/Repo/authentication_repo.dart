@@ -1,5 +1,6 @@
 import 'package:bible_app/Models/Repo/chapter_task_repo.dart';
 import 'package:bible_app/Models/shared_pref.dart';
+import 'package:bible_app/Models/utils/quran_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,9 @@ class AuthenticationRepo {
         await userCredential.user!.sendEmailVerification();
 
         var docRef = FirebaseFirestore.instance
-            .collection("BibleTask")
+            .collection("user_books")
             .doc('${userCredential.user!.uid}')
-            .collection('userTask');
+            .collection('books');
 
         BibleBookRepo.bookList;
 
@@ -56,6 +57,7 @@ class AuthenticationRepo {
             "read_chapters": readChapters,
             "read_status": false,
             "total_chapters": item['bible_chapters'],
+            "book_id" : 'bible',
 //       "chapter_name" : null,
 
             'completed_chapter': 0,
@@ -70,8 +72,32 @@ class AuthenticationRepo {
           "completed_chapters": 0,
           "total_books": 66,
           "read_books": 0,
-          "book_name" : "The Holy bible"
+          "book_name" : "The Holy bible",
         });
+        await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books').doc("Quran").set({
+          "total_chapter": 0,
+          "completed_chapters": 0,
+          "total_books": 114,
+          "read_books": 0,
+          "book_name" : "The Holy Quran",
+        });
+
+        for(var i =0 ; i<QuranData.list.length ; i++){
+          docRef.add({
+            'id': i,
+            "book_name": QuranData.list[i],
+            "read_chapters": [],
+            "read_status": false,
+            "total_chapters": 0,
+            "book_id" : 'Quran',
+//       "chapter_name" : null,
+
+            'completed_chapter': 0,
+            "notes": '',
+            "created_date": Timestamp.now()
+          });
+
+        }
 
         await SharedPrefs.setDefaultBook(
           DefaultBookModel(
@@ -152,3 +178,92 @@ class AuthenticationRepo {
     }
   }
 }
+
+
+//  static Future<bool> signUp({
+//     required String email,
+//     required String password,
+//     required String userName,
+//   }) async {
+//     try {
+//       UserCredential userCredential = await FirebaseAuth.instance
+//           .createUserWithEmailAndPassword(email: email, password: password);
+//
+//       if (userCredential.user != null && !userCredential.user!.emailVerified) {
+//         await userCredential.user!.sendEmailVerification();
+//
+//         var docRef = FirebaseFirestore.instance
+//             .collection("BibleTask")
+//             .doc('${userCredential.user!.uid}')
+//             .collection('userTask');
+//
+//         BibleBookRepo.bookList;
+//
+//         var userRef = FirebaseFirestore.instance
+//             .collection('Users')
+//             .doc(FirebaseAuth.instance.currentUser!.uid);
+//         await userRef.set({
+//           "user_name": userName,
+//           "join_date": Timestamp.now(),
+//           "profile_image": '',
+//           "address": '',
+//           "email": email,
+//           "password": password
+//         });
+//
+//         for (var item in BibleBookRepo.bookList) {
+//           List<Map<String, dynamic>> readChapters = [];
+//           for (var i = 0; i < item['bible_chapters']; i++) {
+//             readChapters.add({
+//               "status": false,
+//               "notes": [],
+//             });
+//           }
+//
+//           docRef.add({
+//             'id': item['id'],
+//             "book_name": item['name'],
+//             "read_chapters": readChapters,
+//             "read_status": false,
+//             "total_chapters": item['bible_chapters'],
+//             "book_id" : 'bible',
+// //       "chapter_name" : null,
+//
+//             'completed_chapter': 0,
+//             "notes": '',
+//             "created_date": Timestamp.now()
+//           });
+//           print('==================== added $item');
+//         }
+//
+//         await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books').doc("bible").set({
+//           "total_chapter": 1189,
+//           "completed_chapters": 0,
+//           "total_books": 66,
+//           "read_books": 0,
+//           "book_name" : "The Holy bible",
+//         });
+//
+//         await SharedPrefs.setDefaultBook(
+//           DefaultBookModel(
+//             bookId: 'bible',
+//             bookName: 'The Holy Bible',
+//             isPreDefined: true,
+//             isList: true,
+//           ),
+//         );
+//         await FirebaseAuth.instance.signOut();
+//         await Future.delayed(Duration(seconds: 3));
+//         return true;
+//       } else {
+//         return false;
+//       }
+//     } on FirebaseAuthException catch (e) {
+//       Fluttertoast.showToast(
+//           msg: getMessage(e.code), backgroundColor: Colors.red);
+//       print('============================== error ${e.message}');
+//       // Fluttertoast.showToast(msg: e.code);
+//       return false;
+//       // TODO
+//     }
+//   }

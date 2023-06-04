@@ -35,20 +35,20 @@ class _NotesScreenState extends State<NotesScreen> {
   final formKey = GlobalKey<FormState>();
 
 
-  var ref=BibleTaskRepo. preDefineRef.doc('hjhj');
+  var ref=BibleTaskRepo. newBookRef.doc('hjhj');
 
   var book ;
   getRef()async{
     await   SharedPrefs.getDefaultBook();
     var book =   await SharedPrefs.getDefaultBook();
 
-    if(book!.bookId =='bible'){
-      setState(() {
-        ref = BibleTaskRepo. preDefineRef.doc(widget.model.documentId);
-
-      });
-
-    }else{
+    // if(book!.bookId =='bible'){
+    //   setState(() {
+    //     ref = BibleTaskRepo. preDefineRef.doc(widget.model.documentId);
+    //
+    //   });
+    //
+    // }else{
 
       setState(() {
         ref = BibleTaskRepo.newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
@@ -56,7 +56,7 @@ class _NotesScreenState extends State<NotesScreen> {
             .doc(widget.model.documentId);
       });
 
-    }
+   // }
   }
   List listOfNotes = [];
 

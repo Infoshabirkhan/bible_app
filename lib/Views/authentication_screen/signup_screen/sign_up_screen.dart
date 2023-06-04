@@ -112,6 +112,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(height: 15.sp,),
 
                 Text('Name', style: GoogleFonts.poppins(),),
+                SizedBox(
+                  height: 4.sp,
+                ),
                 MyTextField(
                   validator: (value){
                     if(value == null || value.isEmpty){
@@ -132,6 +135,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(height: 25.sp,),
 
                 Text('Email', style: GoogleFonts.poppins(),),
+                SizedBox(
+                  height: 4.sp,
+                ),
                 MyTextField(
 
 
@@ -155,6 +161,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(height: 25.sp,),
 
                 Text('Password', style: GoogleFonts.poppins(),),
+                SizedBox(
+                  height: 4.sp,
+                ),
                 PasswordFields(
 
                   validator: (value){
@@ -175,6 +184,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(height: 25.sp,),
 
                 Text('Confirm Password', style: GoogleFonts.poppins(),),
+                SizedBox(
+                  height: 4.sp,
+                ),
                 PasswordFields(
 
                   validator: (value){

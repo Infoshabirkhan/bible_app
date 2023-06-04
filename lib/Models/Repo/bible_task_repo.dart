@@ -14,11 +14,14 @@ class BibleTaskRepo {
 
   var shared = SharedPrefs.getDefaultBook();
 
-  static var preDefineRef = FirebaseFirestore.instance
-      .collection('BibleTask')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('userTask');
-
+  // static var preDefineRef = FirebaseFirestore.instance
+  //     .collection('BibleTask')
+  //     .doc(FirebaseAuth.instance.currentUser!.uid)
+  //     .collection('userTask');
+  // static var preDefineRef = FirebaseFirestore.instance
+  //     .collection('user_books')
+  //     .doc(FirebaseAuth.instance.currentUser!.uid)
+  //     .collection('userTask');
   static var newBookRef = FirebaseFirestore.instance
       .collection('user_books');
 
@@ -72,7 +75,7 @@ class BibleTaskRepo {
       //   ref = await newBookRef
       //       .get();
       // }
-      var ref = await preDefineRef.snapshots().map((data) =>
+      var ref = await newBookRef.snapshots().map((data) =>
           data.docs.map((book) => TaskModel.fromJson(book.id, book)).toList());
 
       // if (ref != null) {
@@ -121,12 +124,12 @@ class BibleTaskRepo {
     var book = await SharedPrefs.getDefaultBook();
 
     var ref;
-    if (book!.bookId == 'bible') {
-      ref = await preDefineRef.get();
-    } else {
+    // if (book!.bookId == 'bible') {
+    //   ref = await preDefineRef.get();
+    // } else {
       ref = await newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('books').get();
-    }
+   // }
     await ref.add({
       "book_name": model.bookName,
       "chapter_name": model.totalChapters,
@@ -142,12 +145,12 @@ class BibleTaskRepo {
       var book = await SharedPrefs.getDefaultBook();
 
       var ref;
-      if (book!.bookId == 'bible') {
-        ref = await preDefineRef;
-      } else {
+      // if (book!.bookId == 'bible') {
+      //   ref = await preDefineRef;
+      // } else {
         ref = await newBookRef.doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('books');
-      }
+     // }
       await ref.doc(model.documentId).update(TaskModel.toJson(model));
 
       if (model.readStatus) {
@@ -157,7 +160,7 @@ class BibleTaskRepo {
       }
       await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('books')
-            .doc(book.bookId)
+            .doc(book?.bookId)
             .update({"read_books": ChapterModel.model.readBooks});
 
       return true;

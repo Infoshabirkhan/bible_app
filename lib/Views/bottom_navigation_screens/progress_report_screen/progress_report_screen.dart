@@ -45,7 +45,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
       onWillPop: () async {
         widget.pageController.jumpToPage(0);
 
-        return true;
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(

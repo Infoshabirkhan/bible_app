@@ -4,6 +4,7 @@ import 'package:bible_app/Views/bottom_navigation_screens/book_list_screen/edit_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Models/Repo/advertisement_repo.dart';
@@ -16,11 +17,15 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
+      onTap:data.totalChapters == 0 ? null: () async {
         if (AdvertisementRepo.interstitialAd == null) {
           await AdvertisementRepo.createInterstitialAd();
         }
 
+        if(data.totalChapters == 0){
+          Fluttertoast.showToast(msg: 'No sub chapters found');
+          return;
+        }
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           return EditTaskScreen(model: data);
         }));
@@ -65,14 +70,14 @@ class BookCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  data.totalChapters== 0 ? SizedBox():  Expanded(
                     child: Center(
-                        child: Text(
-                      data.totalChapters.toString(),
+                        child:    Text(
+     data.totalChapters.toString(),
                       style: GoogleFonts.poppins(),
                     )),
                   ),
-                  const Expanded(child: Icon(Icons.arrow_forward_ios))
+                  data.totalChapters == 0 ? SizedBox():    Expanded(child: Icon(Icons.arrow_forward_ios))
                 ],
               ),
             ),

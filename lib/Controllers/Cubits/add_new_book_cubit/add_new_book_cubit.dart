@@ -20,7 +20,6 @@ class AddNewBookCubit extends Cubit<AddNewBookState> {
     emit(AddNewBookLoading());
     try {
       var response = await UserBookRepo.addNewBook();
-   await   Future.delayed(Duration(milliseconds: 500));
       if(response == true){
         emit(AddNewBookDone());
       }else{

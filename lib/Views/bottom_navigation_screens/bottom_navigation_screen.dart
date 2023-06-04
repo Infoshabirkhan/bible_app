@@ -76,9 +76,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         children:  [
           AllBooksScreen(pageController: pageController,),
           ProgressReportScreen(pageController: pageController,),
-          BookListScreen(),
-          SortedOrderScreen(),
-          ProfileScreen(),
+          BookListScreen(pageController: pageController,),
+          SortedOrderScreen(pageController: pageController,),
+          ProfileScreen(pageController: pageController,),
         ],
       ),
     );
