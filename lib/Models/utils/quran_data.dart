@@ -71,7 +71,6 @@ class QuranData{
     "Al-Mulk (The Sovereignty)",
     "Al-Qalam (The Pen)",
     "Al-Haaqqa (The Reality)",
-    "Al-Ma'",
     "Al-Ma'arij (The Ascending Stairways)",
     "Nuh (Noah)",
     "Al-Jinn (The Jinn)",
