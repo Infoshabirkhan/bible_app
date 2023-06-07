@@ -87,7 +87,7 @@ class _BookListScreenState extends State<BookListScreen> {
                                   flex: 5,
                                   child: Row(
                                     children: [
-                                      Expanded(child:
+                                    state.model[0].totalChapters == 0 ? SizedBox():  Expanded(child:
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: FittedBox(
@@ -99,9 +99,12 @@ class _BookListScreenState extends State<BookListScreen> {
 
 
 
-                                      Expanded(child: Center(
+                                      Expanded(child: Align(
+                                        alignment:    state.model[0].totalChapters == 0 ? Alignment.centerLeft: Alignment.center,
+
+
                                         child: FittedBox(
-                                          child: Text('Chapter',style: GoogleFonts.poppins(
+                                          child: Text('Chapters',style: GoogleFonts.poppins(
 
 
                                           ),),

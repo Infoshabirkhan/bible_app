@@ -114,9 +114,9 @@ class QuranData{
     "Al-Kafiroon (The Disbelievers)",
     "An-Nasr (Divine Support)",
     "Al-Masad (The Palm Fiber)",
-    "Al-Ikhlas (The Sincerity)"
-    "Al-Falaq (The Daybreak)"
-    "An-Nas (Mankind)"
+    "Al-Ikhlas (The Sincerity)",
+    "Al-Falaq (The Daybreak)",
+    "An-Nas (Mankind)",
   ];
 
 

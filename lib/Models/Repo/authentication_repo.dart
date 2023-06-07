@@ -61,7 +61,7 @@ class AuthenticationRepo {
 //       "chapter_name" : null,
 
             'completed_chapter': 0,
-            "notes": '',
+            "notes": [],
             "created_date": Timestamp.now()
           });
           print('==================== added $item');
@@ -93,7 +93,7 @@ class AuthenticationRepo {
 //       "chapter_name" : null,
 
             'completed_chapter': 0,
-            "notes": '',
+            "notes": [],
             "created_date": Timestamp.now()
           });
 

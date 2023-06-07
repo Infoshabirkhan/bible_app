@@ -97,7 +97,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                               builder: (context, state) {
                                 if (state is ChapterLoaded) {
                                   return Text(
-                                    'Books Completed of ${ChapterModel.model.totalBooks}',
+                                    'Chapters Completed of ${ChapterModel.model.totalBooks}',
                                     style: GoogleFonts.poppins(
                                       fontSize: 20.sp,
                                     ),
@@ -129,7 +129,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                               height: 10.sp,
                             ),
                             Text(
-                              'Books Completed %',
+                              'Chapters Completed %',
                               style: GoogleFonts.poppins(
                                 fontSize: 20.sp,
                               ),
@@ -164,11 +164,11 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                             SizedBox(
                               height: 20.sp,
                             ),
-                            BlocBuilder<ChapterCubit, ChapterState>(
+                                 BlocBuilder<ChapterCubit, ChapterState>(
                               builder: (context, state) {
                                 if (state is ChapterLoaded) {
-                                  return Text(
-                                    'Chapters Completed of ${ChapterModel.model.totalChapters}',
+                                  return ChapterModel.model.totalChapters == 0 ? SizedBox():   Text(
+                                    'Sub Chapter Completed of ${ChapterModel.model.totalChapters}',
                                     style: GoogleFonts.poppins(
                                       fontSize: 20.sp,
                                     ),
@@ -178,7 +178,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                                 }
                               },
                             ),
-                            BlocBuilder<ChapterCubit, ChapterState>(
+                                BlocBuilder<ChapterCubit, ChapterState>(
                               builder: (context, state) {
                                 if (state is ChapterLoaded) {
                                   // return Text('${ChapterModel.model.chapterLength}',
@@ -186,7 +186,7 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                                   //       color: Colors.green,
                                   //       fontSize: 30.sp
                                   //   ),);
-                                  return Text(
+                                  return  ChapterModel.model.totalChapters == 0 ? SizedBox():Text(
                                     '${ChapterModel.model.completedChapters}',
                                     style: GoogleFonts.poppins(
                                         color: Colors.green, fontSize: 30.sp),
@@ -199,18 +199,22 @@ class _ProgressReportScreenState extends State<ProgressReportScreen> {
                             SizedBox(
                               height: 20.sp,
                             ),
-                            Text(
-                              'Chapters Completed %',
+                        BlocBuilder<ChapterCubit, ChapterState>(
+  builder: (context, state) {
+    return  ChapterModel.model.totalChapters == 0 ? SizedBox(): Text(
+                              'Sub Chapters Completed %',
                               style: GoogleFonts.poppins(
                                 fontSize: 20.sp,
                               ),
-                            ),
-                            BlocBuilder<ChapterCubit, ChapterState>(
+                            );
+  },
+),
+                              BlocBuilder<ChapterCubit, ChapterState>(
                               builder: (context, state) {
                                 if (state is ChapterLoaded) {
-                                  return Text(
+                                  return  ChapterModel.model.totalChapters == 0 ? SizedBox(): Text(
                                     ((ChapterModel.model.completedChapters /
-                                                1189) *
+                                        ChapterModel.model.totalChapters) *
                                             100)
                                         .toStringAsFixed(2),
                                     style: GoogleFonts.poppins(

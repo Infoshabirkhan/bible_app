@@ -28,7 +28,7 @@ class AddNewBookRepo {
       //for(var item in subHeadings){
       var doc = await ref.add(book);
       await ChapterTaskRepo.chapterRef.doc(FirebaseAuth.instance.currentUser!.uid).collection('books')
-        ..doc(doc.id).set({
+        .doc(doc.id).set({
           "total_chapter": book["total_chapters"],
           "completed_chapters": 0,
           "total_books": 1,

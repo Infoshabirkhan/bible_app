@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class TaskModel {
   final String bookName;
   final int totalChapters;
-  final String notes;
+  final List<Note> notes;
   final Timestamp? createdDate;
   final int id;
   final String documentId;
@@ -33,7 +33,7 @@ class TaskModel {
       readStatus: json["read_status"],
       bookName: json["book_name"],
       totalChapters: json["total_chapters"],
-      notes: json["notes"],
+      notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
       // createdDate: json['created_date'],
       createdDate: json['created_date'],
 
@@ -71,9 +71,9 @@ class ReadChapter {
     notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson({required Note model}) => {
     "status": status,
-    "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
+    "notes": List<dynamic>.from(notes.map((x) => Note.toJson(model:model))),
   };
 }
 
@@ -91,9 +91,9 @@ class Note {
     dateTime: json["date_time"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "note": note,
-    "date_time": dateTime,
+ static Map<String, dynamic> toJson({required Note model}) => {
+    "note": model.note,
+    "date_time": model.dateTime,
   };
 }
 

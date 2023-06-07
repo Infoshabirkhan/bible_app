@@ -1,5 +1,6 @@
 import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.dart';
 import 'package:bible_app/Models/models/task_model.dart';
+import 'package:bible_app/Views/bottom_navigation_screens/book_list_screen/chapter_notes_screen.dart';
 import 'package:bible_app/Views/bottom_navigation_screens/book_list_screen/edit_task_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,18 +18,23 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:data.totalChapters == 0 ? null: () async {
+      onTap:() async {
         if (AdvertisementRepo.interstitialAd == null) {
           await AdvertisementRepo.createInterstitialAd();
         }
 
-        if(data.totalChapters == 0){
-          Fluttertoast.showToast(msg: 'No sub chapters found');
-          return;
+
+
+        if(data.totalChapters == 0 ){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ChapterNotesScreen(model: data);
+          }));
+        }else{
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return EditTaskScreen(model: data);
+          }));
         }
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return EditTaskScreen(model: data);
-        }));
+
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -46,7 +52,7 @@ class BookCard extends StatelessWidget {
                           documentId: data.documentId,
                           readStatus: !data.readStatus,
                           totalChapters: data.totalChapters,
-                          notes: 'notes',
+                          notes: data.notes,
                           createdDate: data.createdDate,
                           completedChapters: data.completedChapters,
                           readChapters: data.readChapters));
@@ -60,13 +66,12 @@ class BookCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
+                    flex:  data.totalChapters== 0 ?3:1 ,
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: FittedBox(
-                        child: Text(
-                          data.bookName,
-                          style: GoogleFonts.poppins(),
-                        ),
+                      child: Text(
+                        data.bookName,
+                        style: GoogleFonts.poppins(),
                       ),
                     ),
                   ),
@@ -77,7 +82,7 @@ class BookCard extends StatelessWidget {
                       style: GoogleFonts.poppins(),
                     )),
                   ),
-                  data.totalChapters == 0 ? SizedBox():    Expanded(child: Icon(Icons.arrow_forward_ios))
+                 Expanded(child: Icon(Icons.arrow_forward_ios))
                 ],
               ),
             ),

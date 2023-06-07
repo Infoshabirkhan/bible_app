@@ -19,6 +19,8 @@ class UserBookRepo {
         "book_name": mainBook,
         "completed_chapters": 0,
         "read_books": 0,
+
+
         "total_books": listOfBooks.length,
         "total_chapter": numberOfChapters
       });
@@ -31,7 +33,7 @@ class UserBookRepo {
           "book_name": listOfBooks[i]['book_name'],
           "completed_chapter" :0,
           "created_date" :Timestamp.now(),
-          "notes" :'',
+          "notes" :[],
           "read_chapters": listOfBooks[i]['read_chapters'],
           "read_status": false,
           "total_chapters": listOfBooks[i]['total_chapters'],
