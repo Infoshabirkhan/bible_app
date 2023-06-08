@@ -15,12 +15,12 @@ class UserBookRepo {
           .collection('Chapter')
           .doc(uid)
           .collection('books');
+
+      print('================== main book in repo $mainBook');
    var docId =    await customBook.add({
         "book_name": mainBook,
         "completed_chapters": 0,
         "read_books": 0,
-
-
         "total_books": listOfBooks.length,
         "total_chapter": numberOfChapters
       });

@@ -152,6 +152,72 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                             },
                           )),
                     ),
+
+                    InkWell(
+                      onTap: () {
+                        ChapterTaskRepo.bookName = 'The Holy Quran';
+                        ChapterTaskRepo.bookId = 'Quran';
+                        widget.pageController.jumpToPage(1);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(bottom: 10.sp),
+                          decoration: BoxDecoration(
+                            // color: Colors.black,
+                            //    boxShadow: [
+                            //
+                            //  BoxShadow(color: Colors.grey.withAlpha(100),blurRadius: 5),
+                            // ],
+                              border: Border.all(
+                                  color: Colors.grey[700] ?? Colors.grey)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.sp, horizontal: 5.sp),
+                          child: BlocBuilder<DefaultBookCubit, DefaultBookModel?>(
+                            builder: (context, defaultBook) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'The Holy Quran',
+                                      style: GoogleFonts.raleway(fontSize: 20.sp),
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //   child: Align(
+                                  //     alignment: Alignment.centerRight,
+                                  //     child: Text(
+                                  //       defaultBook!.bookId == 'bible'
+                                  //           ? 'Default'
+                                  //           : '',
+                                  //       style: TextStyle(color: Colors.red),
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: defaultBook!.bookId == 'Quran'
+                                          ? Container(
+                                        height: 25.sp,
+
+                                        child: Image.asset(
+                                          'assets/images/check.png',
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                          : SizedBox(),
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+                          )),
+                    ),
+
+
+
+
+
                     ListView.builder(
                         shrinkWrap: true,
                         primary: false,
@@ -159,7 +225,7 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Visibility(
-                           visible:   state.list[index].documentId != 'bible',
+                           visible:   state.list[index].documentId != 'bible' || state.list[index].documentId != 'Quran',
                             child: InkWell(
                               onTap: () {
                                 ChapterTaskRepo.bookId =

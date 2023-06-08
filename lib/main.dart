@@ -3,6 +3,7 @@ import 'package:bible_app/Controllers/Cubits/bible_books_cubit/bible_books_cubit
 import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'Controllers/Cubits/add_new_book_cubit/add_new_book_cubit.dart';
 import 'Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
 import 'Controllers/Cubits/bottom_navigaiton_cubit.dart';
 import 'Controllers/Cubits/chapter_cubit/chapter_cubit.dart';
+import 'Controllers/Cubits/chapter_notes_cubit/chapter_notes_cubit.dart';
 import 'Controllers/Cubits/default_book_cubit/default_book_cubit.dart';
 import 'Views/authentication_screen/login_screen/login_screen.dart';
 import 'Views/bottom_navigation_screens/bottom_navigation_screen.dart';
@@ -29,6 +31,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseCrashlytics.instance.crash();
+
   runApp(const MyApp());
 }
 
@@ -48,6 +52,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ChapterCubit()),
         BlocProvider(create: (context) => AddNewBookCubit()),
         BlocProvider(create: (context) => BookListCubit([])),
+        BlocProvider(create: (context) => ChapterNotesCubit()),
       ],
       child: ScreenUtilInit(
 

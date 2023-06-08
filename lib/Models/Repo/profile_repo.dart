@@ -18,7 +18,6 @@ class ProfileRepo {
       final ref = FirebaseStorage.instance
           .ref()
           .child('user_image')
-          .child(FirebaseAuth.instance.currentUser!.uid)
           .child(FirebaseAuth.instance.currentUser!.uid + '.jpg');
       UploadTask uploadTask = ref.putFile(
         image,
@@ -39,5 +38,6 @@ class ProfileRepo {
       "user_name": name,
       "profile_image": url
     });
+    return true;
   }
 }

@@ -27,7 +27,7 @@ class BookCard extends StatelessWidget {
 
         if(data.totalChapters == 0 ){
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return ChapterNotesScreen(model: data);
+            return ChapterNotesScreen(model: data, );
           }));
         }else{
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {

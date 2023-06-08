@@ -45,6 +45,9 @@ class AddNewBookCubit extends Cubit<AddNewBookState> {
         firebaseStream = response.listen((data) {
 
           if(data.isNotEmpty){
+            for(var item in data){
+              print(item.documentId);
+            }
             emit(AddNewBookLoaded(list: data));
           }else{
             emit(AddNewBookLoaded(list: []));

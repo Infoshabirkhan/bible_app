@@ -136,7 +136,7 @@ class _AddNewBookState extends State<AddNewBook> {
                   SizedBox(height: 10.sp,),
                   Expanded(
                     child: ListView.builder(
-                      padding: EdgeInsets.only(bottom: 80.sp),
+                      padding: EdgeInsets.only(bottom: 0.31.sh),
 
                         itemCount: stateList.length,
                         itemBuilder: (context, index) {
@@ -330,7 +330,6 @@ class _AddNewBookState extends State<AddNewBook> {
         //     widget.chapters;
 
 
-        UserBookRepo.mainBook = widget.books;
         var readChapters = {
           "status": false,
           "notes": [],

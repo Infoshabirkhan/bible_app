@@ -119,7 +119,7 @@ class AddNewBookRepo {
 //
 //
 //   }
-  static Map<String, dynamic> book = {
+  static Map<String, dynamic>   book = {
     "id": 0,
     "book_name": '',
     "total_chapters": 0,

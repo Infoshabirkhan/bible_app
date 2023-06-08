@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Controllers/Cubits/add_new_book_cubit/book_list_cubit.dart';
 import '../../Models/Repo/add_new_book_repo.dart';
+import '../../Models/Repo/user_book_repo.dart';
 import 'add_new_book.dart';
 
 class BookNameScreen extends StatefulWidget {
@@ -119,8 +120,12 @@ class _BookNameScreenState extends State<BookNameScreen> {
               onTap: () async {
 
                 if(formKey.currentState!.validate()){
-                  AddNewBookRepo.book['book_name'] =
+                  // AddNewBookRepo.book['book_name'] =
+                  //     bookController.text.trim();
+                  //
+                  UserBookRepo.mainBook =
                       bookController.text.trim();
+                  print('============ ${UserBookRepo.mainBook}');
                   var chapter = int.parse(chapters.text);
                   AddNewBookRepo.book['total_chapters'] = chapter;
 
@@ -134,13 +139,11 @@ class _BookNameScreenState extends State<BookNameScreen> {
                   FocusScope.of(context).unfocus();
                   widget.books.text = bookController.text;
                   widget.chapters.text = chapters.text;
+
+
                   context.read<BottomNavigationCubit>().getNext(index: 1);
                   widget.pageController.jumpToPage(1);
-                  // Navigator.of(context)
-                  //     .push(MaterialPageRoute(builder: (context) {
-                  //   return AddNewBook(books: bookController.text,
-                  //     chapters: int.parse(chapters.text),);
-                  // }));
+
 
                 }
               },
