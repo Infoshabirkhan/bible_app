@@ -47,7 +47,7 @@ class TaskModel {
     return {
       "book_name" : model.bookName,
       "total_chapters" : model.totalChapters,
-      "notes": model.notes,
+     // "notes": model.notes,
       "created_date" : model.createdDate,
       "read_status" : model.readStatus,
       "completed_chapter" : model.completedChapters

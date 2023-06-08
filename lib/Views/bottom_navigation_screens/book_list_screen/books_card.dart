@@ -45,6 +45,8 @@ class BookCard extends StatelessWidget {
             Expanded(
               child: Checkbox(
                 onChanged: (x) {
+                  print('===============${data.documentId}');
+
                   context.read<BibleTaskCubit>().update(
                       model: TaskModel(
                           bookName: data.bookName,
