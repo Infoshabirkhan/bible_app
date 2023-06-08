@@ -31,7 +31,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseCrashlytics.instance.crash();
 
   runApp(const MyApp());
 }
