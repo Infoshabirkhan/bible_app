@@ -50,6 +50,5 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
         ),
       ),
     );
-
   }
 }
