@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC7yS16LE4pIh0dlQ8AbdKFN9aVC9wkD7w',
-    appId: '1:736921466167:android:43256b9134c5c6e00ed6b2',
+    appId: '1:736921466167:android:97641b2bf99a2ed90ed6b2',
     messagingSenderId: '736921466167',
     projectId: 'book-tracker-62d8a',
     storageBucket: 'book-tracker-62d8a.appspot.com',

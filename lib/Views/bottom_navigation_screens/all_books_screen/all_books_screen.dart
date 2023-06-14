@@ -67,19 +67,22 @@ class _AllBooksScreenState extends State<AllBooksScreen> {
         appBar: AppBar(
           title: Text('Book list'),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return NewBookPageView();
-            }));
-            // showDialog(
-            //     context: context,
-            //     builder: (context) {
-            //       return AddBookDailog();
-            //     });
-          },
-          label: Text('Add Book'),
-          icon: Icon(Icons.add),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: 50.sp),
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return NewBookPageView();
+              }));
+              // showDialog(
+              //     context: context,
+              //     builder: (context) {
+              //       return AddBookDailog();
+              //     });
+            },
+            label: Text('Add Book'),
+            icon: Icon(Icons.add),
+          ),
         ),
         body: Column(
           children: [
