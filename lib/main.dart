@@ -1,6 +1,7 @@
 import 'package:bible_app/Controllers/Cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/bible_books_cubit/bible_books_cubit.dart';
 import 'package:bible_app/Controllers/Cubits/bible_task_cubit/bible_task_cubit.dart';
+import 'package:bible_app/Models/Repo/advertisement_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
 
   runApp(const MyApp());
 }

@@ -69,10 +69,11 @@ class _ChapterNotesScreenState extends State<ChapterNotesScreen> {
 
   @override
   void initState() {
+
     getRef();
     context.read<ChapterNotesCubit>().getNotes(bookId:widget.model.documentId);
-    AdvertisementRepo.showInterstitialAd();
 
+    AdvertisementRepo.showInterstitialAd();
     // TODO: implement initState
     super.initState();
   }

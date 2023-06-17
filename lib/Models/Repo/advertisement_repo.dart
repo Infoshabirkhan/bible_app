@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../advertisement_id.dart';
-const int maxFailedLoadAttempts = 3;
+const int maxFailedLoadAttempts = 9;
 
 class AdvertisementRepo{
   static const AdRequest request = AdRequest(
@@ -50,9 +50,9 @@ static  InterstitialAd? interstitialAd;
     interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
           print('ad onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+      onAdDismissedFullScreenContent: (InterstitialAd ad) async {
         print('$ad onAdDismissedFullScreenContent.');
-        ad.dispose();
+     await    ad.dispose();
         createInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
@@ -62,7 +62,7 @@ static  InterstitialAd? interstitialAd;
       },
     );
     interstitialAd!.show();
-    interstitialAd = null;
+  //  interstitialAd = null;
   }
 
 

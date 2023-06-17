@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../Models/Repo/advertisement_repo.dart';
 import 'all_books_screen/all_books_screen.dart';
 import 'book_list_screen/book_list_screen.dart';
 
@@ -24,6 +25,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   void initState() {
+    AdvertisementRepo.createInterstitialAd();
+
     context.read<DefaultBookCubit>().getBook();
     // TODO: implement initState
     super.initState();

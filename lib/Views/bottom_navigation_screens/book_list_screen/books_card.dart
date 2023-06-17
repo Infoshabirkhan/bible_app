@@ -19,9 +19,9 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:() async {
-        if (AdvertisementRepo.interstitialAd == null) {
-          await AdvertisementRepo.createInterstitialAd();
-        }
+        // if (AdvertisementRepo.interstitialAd == null) {
+        //   await AdvertisementRepo.createInterstitialAd();
+        // }
 
 
 
